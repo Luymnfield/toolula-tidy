@@ -40,3 +40,14 @@ swift scripts/e2e.swift     # 真实打开 App、真实点击按钮的端到端�
 
 界面文字在代码里写成 `L("中文原文")`，翻译在 `Localization/translations.json`。
 `Localization/extract.py --check` 检查缺少的翻译，编译时会自动提醒。
+
+## 图标
+
+图标由 `scripts/make_icon.swift` 生成（变色龙的形状取自 `Resources/icon_source.png`）：
+
+```bash
+swift scripts/make_icon.swift Resources/icon_source.png Resources   # 生成 Resources/toolula_tidy_icon.png
+```
+
+再用 `sips` 缩放成各个尺寸、`iconutil -c icns` 打包成 `Resources/AppIcon.icns`。
+
