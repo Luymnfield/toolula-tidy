@@ -56,7 +56,7 @@ func drawCham(_ c: CGContext, _ img: CGImage, srcCenter: CGPoint = CGPoint(x: 51
 func text(_ c: CGContext, _ s: String, size: CGFloat, centerX: CGFloat, baseline: CGFloat, colors: [CGColor]) {
     let f0 = NSFont.systemFont(ofSize: size, weight: .bold)
     let font = NSFont(descriptor: f0.fontDescriptor.withDesign(.rounded)!, size: size)!
-    let line = CTLineCreateWithAttributedString(NSAttributedString(string: s, attributes: [.font: font]))
+    let line = CTLineCreateWithAttributedString(NSAttributedString(string: s, attributes: [.font: font, .kern: size * 0.02]))
     let b = CTLineGetBoundsWithOptions(line, .useGlyphPathBounds)
     c.saveGState()
     c.translateBy(x: centerX - b.width / 2 - b.minX, y: baseline); c.scaleBy(x: 1, y: -1)
@@ -91,5 +91,5 @@ for j in 0..<3 { for i in 0..<2 {
     let t = CGFloat(i + j) / 3
     box(c, CGPoint(x: 776 + dx + CGFloat(i) * 60, y: 400 + CGFloat(j) * 60), 48, 0, cg(115 - 40 * t, 225 - 70 * t, 245 + 10 * t))
 } }
-text(c, "Tidy", size: 150, centerX: 512, baseline: 862, colors: [cg(120, 225, 245), cg(80, 150, 255)])
+text(c, "Tidy", size: 182, centerX: 512, baseline: 860, colors: [cg(120, 225, 245), cg(80, 150, 255)])
 save(c, "toolula_tidy_icon.png")
