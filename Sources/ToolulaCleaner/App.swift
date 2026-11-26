@@ -5,6 +5,9 @@ import SwiftUI
 struct ToolulaCleanerApp: App {
     @StateObject private var store = CleanerStore()
     @StateObject private var uninstall = UninstallStore()
+    @StateObject private var duplicates = DuplicateStore()
+    @StateObject private var startup = StartupStore()
+    @StateObject private var diskMap = DiskMapStore()
     /// 界面语言 (改了之后整个界面重画, 菜单栏也跟着变)
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
 
@@ -22,6 +25,9 @@ struct ToolulaCleanerApp: App {
             }
             Scanner.home = URL(fileURLWithPath: path, isDirectory: true)
             CleanerStore.defaults = UserDefaults(suiteName: "com.toolula.cleaner.e2e") ?? .standard
+            // 启动项: 只看假个人文件夹里的, 开关也只记在内存里, 不改真实的系统设置
+            Startup.systemDirs = []
+            Startup.launchctl = FakeLaunchctl.run
         }
         // 命令行自测: ToolulaCleaner --report  只扫描并打印结果, 不删除任何东西
         if CommandLine.arguments.contains("--report") {
@@ -55,6 +61,18 @@ struct ToolulaCleanerApp: App {
             let o = Uninstaller.orphans(installed: apps)
             print(String(format: "已删除应用残留: %d 项, %@, %.2fs", o.count, Scanner.bytes(o.reduce(0) { $0 + $1.size }), Date().timeIntervalSince(t)))
             for i in o.prefix(12) { print("      \(i.name)  \(i.detail)  \(Scanner.bytes(i.size))") }
+            t = Date()
+            let d = Duplicates.find(minSize: 1_000_000)
+            print(String(format: "重复文件: %d 组, 可腾出 %@, %.2fs", d.count, Scanner.bytes(d.reduce(0) { $0 + $1.wasted }), Date().timeIntervalSince(t)))
+            for g in d.prefix(5) { print("      \(g.files.count) × \(Scanner.bytes(g.size))  \(g.files.map { Scanner.short($0.url) }.joined(separator: " | "))") }
+            t = Date()
+            let s = Startup.list()
+            print(String(format: "启动项: %d 个, %.2fs", s.count, Date().timeIntervalSince(t)))
+            for i in s { print("      [\(i.scope)] \(i.disabled ? "关" : "开") \(i.running ? "运行中" : "") \(i.name) (\(i.label)) \(i.programMissing ? "程序不存在" : "")") }
+            t = Date()
+            let m = DiskMap.children(of: Scanner.home)
+            print(String(format: "空间地图 (个人文件夹): %@, %.2fs", Scanner.bytes(m.reduce(0) { $0 + $1.size }), Date().timeIntervalSince(t)))
+            for n in m.prefix(6) { print("      \(n.name)  \(Scanner.bytes(n.size))") }
             exit(0)
         }
     }
@@ -66,11 +84,17 @@ struct ToolulaCleanerApp: App {
                 .environment(\.locale, Locale(identifier: AppLanguage.resolved))
                 .environmentObject(store)
                 .environmentObject(uninstall)
+                .environmentObject(duplicates)
+                .environmentObject(startup)
+                .environmentObject(diskMap)
                 .frame(minWidth: 980, minHeight: 560)
                 .background(WindowAccessor { WindowSetup.apply(to: $0) })
                 .onAppear {
                     AppAppearance.apply(.current)
                     uninstall.cleaner = store
+                    duplicates.cleaner = store
+                    startup.cleaner = store
+                    diskMap.cleaner = store
                     SystemInfo.shared.start()
                     MemoryMonitor.shared.start()
                     store.scan(CategoryKind.quick)
@@ -79,6 +103,9 @@ struct ToolulaCleanerApp: App {
                        let arg = Optional(CommandLine.arguments[i + 1]) {
                         if arg == "uninstall" { store.section = .uninstall }
                         else if arg == "memory" { store.section = .memory }
+                        else if arg == "startup" { store.section = .startup }
+                        else if arg == "duplicates" { store.section = .duplicates }
+                        else if arg == "diskMap" { store.section = .diskMap }
                         else if let k = CategoryKind(rawValue: arg) { store.section = .category(k) }
                     }
                 }

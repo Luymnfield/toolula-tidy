@@ -17,9 +17,9 @@ for y in top..<bottom {
         for c in 0..<4 { p[c] = UInt8((Double(a[c]) * (1 - t) + Double(b[c]) * t).rounded()) }
     }
 }
-// 2. 写 "Cleaner": 绿→青渐变, 和变色龙同一套颜色
-let font = NSFont.systemFont(ofSize: 132, weight: .heavy)
-let str = NSAttributedString(string: "Cleaner", attributes: [.font: font, .kern: 1])
+// 2. 写 "Tidy": 绿→青渐变, 和变色龙同一套颜色
+let font = NSFont.systemFont(ofSize: 150, weight: .heavy)
+let str = NSAttributedString(string: "Tidy", attributes: [.font: font, .kern: 1])
 let line = CTLineCreateWithAttributedString(str)
 let bounds = CTLineGetBoundsWithOptions(line, .useGlyphPathBounds)
 let ox = (CGFloat(W) - bounds.width) / 2 - bounds.minX

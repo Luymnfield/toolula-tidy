@@ -3,7 +3,7 @@ import Foundation
 
 /// 清理的类别 (左侧栏每一项)
 enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
-    case appCaches, logs, developer, browser, downloads, trash, largeFiles
+    case appCaches, logs, developer, projects, browser, downloads, trash, largeFiles
     var id: String { rawValue }
 
     /// 左侧栏用的短名字
@@ -12,6 +12,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
         case .appCaches: return L("应用缓存")
         case .logs: return L("日志")
         case .developer: return L("开发者")
+        case .projects: return L("项目")
         case .browser: return L("浏览器")
         case .downloads: return L("下载")
         case .trash: return L("废纸篓")
@@ -24,6 +25,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
         case .appCaches: return L("应用缓存")
         case .logs: return L("日志与崩溃报告")
         case .developer: return L("开发者垃圾")
+        case .projects: return L("开发项目里的垃圾")
         case .browser: return L("浏览器缓存")
         case .downloads: return L("下载里的旧文件")
         case .trash: return L("废纸篓")
@@ -36,6 +38,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
         case .appCaches: return "archivebox"
         case .logs: return "doc.text.magnifyingglass"
         case .developer: return "hammer"
+        case .projects: return "shippingbox"
         case .browser: return "safari"
         case .downloads: return "arrow.down.circle"
         case .trash: return "trash"
@@ -48,6 +51,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
         case .appCaches: return L("应用为加速保存的临时文件，删了会自动重新生成")
         case .logs: return L("应用日志和崩溃报告，只用来排查问题")
         case .developer: return L("Xcode 编译缓存、模拟器缓存、Homebrew / npm / pip 等下载缓存")
+        case .projects: return L("项目里的 node_modules、.venv、target、build 等文件夹，需要时能重新安装、重新编译")
         case .browser: return L("Safari、Chrome、Edge 等浏览器的网页缓存，不动书签和密码")
         case .downloads: return L("下载文件夹里很久没碰过的文件，需要你自己挑")
         case .trash: return L("清空废纸篓，才会真正腾出空间")
@@ -61,6 +65,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
         case .appCaches: return L("缓存删掉后应用会自动重新生成。正在运行的应用已自动取消勾选。")
         case .logs: return L("日志和崩溃报告只用来排查问题，可以放心清理。")
         case .developer: return L("删除后下次编译或安装会重新生成、重新下载。Xcode 归档里是你打包过的版本，默认不勾选。")
+        case .projects: return L("只列出能重新生成的依赖包和编译产物，不动源代码。超过 30 天没改过的项目默认勾选。")
         case .browser: return L("只清理网页缓存，不会动书签、密码、历史记录和登录状态。正在运行的浏览器需要先退出。")
         case .downloads: return L("这些是你自己下载的文件，默认都不勾选，请看清楚再选。删除的文件会移到废纸篓。")
         case .trash: return L("清空后无法恢复，请确认里面没有还要用的东西。")
@@ -73,7 +78,7 @@ enum CategoryKind: String, CaseIterable, Identifiable, Codable, Sendable {
     /// 打开 App 时自动扫描的类别 (不会弹出文件夹访问授权)
     static let quick: [CategoryKind] = [.appCaches, .logs, .developer, .browser, .trash]
     /// 「全面扫描」的类别 (大文件扫描较慢, 进入它的页面才扫)
-    static let full: [CategoryKind] = [.appCaches, .logs, .developer, .browser, .downloads, .trash]
+    static let full: [CategoryKind] = [.appCaches, .logs, .developer, .projects, .browser, .downloads, .trash]
 }
 
 /// 可以清理的一项 (一个文件或文件夹)
@@ -147,6 +152,7 @@ enum Scanner {
         case .appCaches: r = appCaches(ctx)
         case .logs: r = ScanOutput(items: items(children(u("Library/Logs")).map { Candidate(url: $0, selected: true) }))
         case .developer: r = developer(ctx)
+        case .projects: r = ProjectJunk.scan()
         case .browser: r = browser(ctx)
         case .downloads: r = downloads(ctx)
         case .trash: r = trash()
@@ -207,7 +213,7 @@ enum Scanner {
     static func downloads(_ ctx: ScanContext) -> ScanOutput {
         let keys: Set<URLResourceKey> = [.contentModificationDateKey, .addedToDirectoryDateKey]
         guard let list = try? FileManager.default.contentsOfDirectory(at: u("Downloads"), includingPropertiesForKeys: Array(keys)) else {
-            return ScanOutput(error: L("没有权限读取下载文件夹。请在「系统设置 › 隐私与安全性 › 文件与文件夹」里允许 Toolula Cleaner。"))
+            return ScanOutput(error: L("没有权限读取下载文件夹。请在「系统设置 › 隐私与安全性 › 文件与文件夹」里允许 Toolula Tidy。"))
         }
         let cutoff = Date().addingTimeInterval(-Double(ctx.downloadsDays) * 86400)
         let cands = list.filter { !$0.lastPathComponent.hasPrefix(".") }.compactMap { f -> Candidate? in
@@ -234,32 +240,38 @@ enum Scanner {
                                            "pages", "numbers", "key", "rtfd", "sparsebundle", "dSYM"]
 
     static func largeFiles(_ ctx: ScanContext) -> ScanOutput {
-        // 不扫: 资源库 (应用数据)、Toolula AI 的数据和模型、应用程序、隐藏文件夹、各种媒体库内部
-        let skipTop: Set<String> = ["Library", "Toolula", "Applications"]
-        let roots = children(home).filter { !$0.lastPathComponent.hasPrefix(".") && !skipTop.contains($0.lastPathComponent) }
-        let lock = NSLock()
-        var found: [(String, Int64)] = []
+        let roots = personalRoots()
+        let found = Locked<[(String, Int64)]>([])
         var opts = FastWalker.Options()
         opts.skipHidden = true
-        opts.skipDir = { name, _ in
-            guard let dot = name.lastIndex(of: ".") else { return false }
-            return packageExts.contains(String(name[name.index(after: dot)...]))
-        }
+        opts.skipDir = { name, _, _ in isPackage(name) }
         opts.fileThreshold = ctx.largeThreshold
         opts.onFile = { _, path, size in
-            lock.lock(); found.append((path, size)); lock.unlock()
+            found.mutate { $0.append((path, size)) }
         }
         _ = FastWalker.sizes(roots.map(\.path), options: opts)
 
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
-        let items = found.sorted { $0.1 > $1.1 }.prefix(300).map { path, size -> CleanItem in
+        let items = found.value.sorted { $0.1 > $1.1 }.prefix(300).map { path, size -> CleanItem in
             let f = URL(fileURLWithPath: path)
             let date = (try? f.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate.map { df.string(from: $0) } ?? ""
             return CleanItem(url: f, name: f.lastPathComponent, detail: "\(date) · \(short(f.deletingLastPathComponent()))",
                              size: size, selected: false, note: modelExts.contains(f.pathExtension.lowercased()) ? L("AI 模型") : nil)
         }
         return ScanOutput(items: items)
+    }
+
+    /// 个人文件夹里「你自己的文件」所在的第一层文件夹.
+    /// 不含: 资源库 (应用数据)、Toolula AI 的数据和模型、应用程序、隐藏文件夹
+    static func personalRoots() -> [URL] {
+        let skipTop: Set<String> = ["Library", "Toolula", "Applications"]
+        return children(home).filter { !$0.lastPathComponent.hasPrefix(".") && !skipTop.contains($0.lastPathComponent) }
+    }
+
+    static func isPackage(_ name: String) -> Bool {
+        guard let dot = name.lastIndex(of: ".") else { return false }
+        return packageExts.contains(String(name[name.index(after: dot)...]))
     }
 
     /// AI 模型文件 (可能正在被 Toolula AI / ComfyUI 使用, 标出来提醒)
@@ -341,6 +353,7 @@ enum Safety {
             return p.hasPrefix(home + "/") && !p.hasPrefix(home + "/Library/") && !p.hasPrefix(home + "/Toolula/")
                 && p.split(separator: "/").count > home.split(separator: "/").count + 1
         }
+        if kind == .projects { return ProjectJunk.allowed(p, home: home) }
         // 开发者里的整个缓存文件夹 (例如 ~/.npm/_cacache) 本身也可以删
         if kind == .developer, Scanner.devItems.contains(where: { normalized(Scanner.u($0.0).path) == p }) { return true }
         return roots.contains { p.hasPrefix(normalized($0) + "/") }

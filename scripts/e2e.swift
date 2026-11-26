@@ -6,7 +6,7 @@ import ApplicationServices
 
 let fm = FileManager.default
 let appPath = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
-    .appendingPathComponent("build/Toolula Cleaner.app")
+    .appendingPathComponent("build/Toolula Tidy.app")
 var failed = 0
 func check(_ ok: Bool, _ what: String) {
     print(ok ? "  ✅ \(what)" : "  ❌ \(what)")
@@ -34,6 +34,18 @@ NSDictionary(dictionary: ["CFBundleIdentifier": "com.e2e.dummy", "CFBundleExecut
     .write(to: dummyApp.appendingPathComponent("Contents/Info.plist"), atomically: true)
 let pref = mk("Library/Preferences/com.e2e.dummy.plist", 2_000)
 let support = mk("Library/Application Support/E2E Dummy/data.db", 40_000)
+// 第二档功能用的: 一个 100 天没改过的项目、两个一样的文件、一个启动项
+let pkg = mk("Code/web/package.json", 100)
+let nodeModules = home.appendingPathComponent("Code/web/node_modules")
+_ = mk("Code/web/node_modules/lib/index.js", 120_000)
+let longAgo = Date().addingTimeInterval(-100 * 86400)
+for p in [pkg.path, home.appendingPathComponent("Code/web").path] { try! fm.setAttributes([.modificationDate: longAgo], ofItemAtPath: p) }
+let dupA = mk("Documents/photo.raw", 1_500_000)
+Thread.sleep(forTimeInterval: 1.1)
+let dupB = mk("Documents/Backup/photo copy.raw", 1_500_000)
+try! fm.createDirectory(at: home.appendingPathComponent("Library/LaunchAgents"), withIntermediateDirectories: true)
+NSDictionary(dictionary: ["Label": "com.e2e.agent", "ProgramArguments": ["/bin/sh"]])
+    .write(to: home.appendingPathComponent("Library/LaunchAgents/com.e2e.agent.plist"), atomically: true)
 let trash = fm.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
 func inTrash(_ name: String) -> Bool { ((try? fm.contentsOfDirectory(atPath: trash.path)) ?? []).contains { $0.hasPrefix(name) } }
 func exists(_ u: URL) -> Bool { fm.fileExists(atPath: u.path) }
@@ -108,9 +120,9 @@ func press(_ e: AXUIElement?, _ what: String) {
     if r != .success && ![-25204, -25205].contains(r.rawValue) { check(false, "点击「\(what)」(\(r.rawValue))") }
     Thread.sleep(forTimeInterval: 0.4)
 }
-func waitButton(_ get: @autoclosure () -> AXUIElement?, _ what: String) -> AXUIElement? {
+func waitButton(_ get: @autoclosure () -> AXUIElement?, _ what: String, timeout: Double = 12) -> AXUIElement? {
     var b: AXUIElement?
-    wait("「\(what)」可以点") { b = get(); return b.map(enabled) ?? false }
+    wait("「\(what)」可以点", timeout: timeout) { b = get(); return b.map(enabled) ?? false }
     return b
 }
 
@@ -153,7 +165,47 @@ step("内存页面")
 press(byID("rail-memorychip"), "左侧栏「内存」")
 check(wait("内存压力") { text(containing: "内存压力") != nil && text(containing: "占用内存最多的应用") != nil }, "显示内存压力和占用最多的应用")
 
-// MARK: 5. 语言菜单
+// MARK: 5. 开发项目里的垃圾
+step("项目 → 清理旧项目的 node_modules → 撤销")
+press(byID("rail-sparkles"), "左侧栏「清理」")
+press(waitButton(byID("cat-projects"), "清理页面里的「开发项目里的垃圾」"), "开发项目里的垃圾")
+check(wait("找到 node_modules", timeout: 20) { text(containing: "web · Node") != nil }, "找到了 100 天没改过的项目里的 node_modules")
+press(waitButton(byID("category-clean"), "清理所选"), "清理所选")
+press(waitButton(dialogButton("清理"), "确认框里的「清理」"), "确认框里的「清理」")
+check(wait("node_modules 移走") { !exists(nodeModules) }, "node_modules 移到了废纸篓")
+check(exists(pkg), "项目文件 package.json 没动")
+press(waitButton(byID("toast-undo"), "撤销"), "撤销")
+check(wait("放回") { exists(nodeModules) }, "撤销后 node_modules 放回了")
+
+// MARK: 6. 重复文件
+step("重复文件 → 查找 → 清理 → 撤销")
+press(byID("rail-doc.on.doc"), "左侧栏「重复」")
+press(waitButton(byID("dup-scan"), "开始查找"), "开始查找")
+press(waitButton(byID("dup-clean"), "清理所选", timeout: 30), "清理所选")
+press(waitButton(dialogButton("移到废纸篓"), "确认框里的「移到废纸篓」"), "确认框里的「移到废纸篓」")
+check(wait("副本移走") { !exists(dupB) }, "副本移到了废纸篓")
+check(exists(dupA), "最早的那份留着")
+press(waitButton(byID("toast-undo"), "撤销"), "撤销")
+check(wait("副本放回") { exists(dupB) }, "撤销后副本放回了")
+
+// MARK: 7. 启动项 (假个人文件夹模式下开关只记在内存里, 不改真实系统)
+step("启动项 → 关掉 → 打开")
+press(byID("rail-power"), "左侧栏「启动项」")
+func toggleValue() -> Int? { byID("startup-toggle-com.e2e.agent").flatMap { attr($0, kAXValueAttribute) as? Int } }
+check(wait("显示测试启动项") { toggleValue() == 1 }, "列出了测试启动项，开启中")
+press(byID("startup-toggle-com.e2e.agent"), "开关")
+check(wait("关掉") { toggleValue() == 0 }, "点一下就关掉了")
+press(waitButton(byID("startup-toggle-com.e2e.agent"), "开关"), "开关")
+check(wait("打开") { toggleValue() == 1 }, "再点一下又打开了")
+
+// MARK: 8. 空间地图
+step("空间地图")
+press(byID("rail-square.grid.2x2"), "左侧栏「空间」")
+check(wait("地图", timeout: 20) { byID("map-row-Code") != nil && byID("map-row-Documents") != nil }, "列出了个人文件夹里的文件夹")
+press(byID("map-row-Code"), "Code 文件夹")
+check(wait("进入 Code") { byID("map-row-web") != nil }, "点进去显示下一层")
+
+// MARK: 9. 语言菜单
 step("设置 › 语言 → English → 简体中文")
 func chooseLanguage(_ name: String) -> Bool {
     guard let gear = find({ str($0, kAXRoleAttribute) == "AXMenuButton" }) else { return false }

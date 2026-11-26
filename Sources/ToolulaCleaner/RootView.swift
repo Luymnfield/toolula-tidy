@@ -4,6 +4,9 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var store: CleanerStore
     @EnvironmentObject var un: UninstallStore
+    @EnvironmentObject var dup: DuplicateStore
+    @EnvironmentObject var startup: StartupStore
+    @EnvironmentObject var map: DiskMapStore
     @ObservedObject var mem = MemoryMonitor.shared
 
     var body: some View {
@@ -13,8 +16,11 @@ struct RootView: View {
             Group {
                 switch store.section {
                 case .home: HomeView()
-                case .category(let k): CategoryView(kind: k).id(k)
+                case .category(let k): CleanView(kind: k)
                 case .uninstall: UninstallView()
+                case .startup: StartupView()
+                case .duplicates: DuplicatesView()
+                case .diskMap: DiskMapView()
                 case .memory: MemoryView()
                 }
             }
@@ -49,7 +55,7 @@ struct RootView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) { SettingsMenu() }
         }
-        .navigationTitle("Toolula Cleaner")
+        .navigationTitle("Toolula Tidy")
         .navigationSubtitle(subtitle)
         .confirmationDialog(L("确认清理？"), isPresented: Binding(get: { store.pendingClean != nil },
                                                           set: { if !$0 { store.pendingClean = nil } }),
@@ -60,6 +66,8 @@ struct RootView: View {
             Text(store.confirmText(kinds))
         }
     }
+
+    var isCleaning: Bool { if case .category = store.section { return true }; return false }
 
     var subtitle: String {
         if store.cleaning { return L("正在清理…") }
@@ -101,20 +109,25 @@ struct RootView: View {
             .accessibilityIdentifier("rail-home")
             .padding(.top, compact ? 8 : 10).padding(.bottom, compact ? 3 : 6)
 
-            ForEach(CategoryKind.allCases) { k in
-                let st = store.state(k)
-                RailButton(icon: k.icon, title: k.title, selected: store.section == .category(k),
-                           sub: st.scanning ? L("扫描中") : st.error != nil ? L("需授权") : !st.scanned ? L("未扫描")
-                                : st.total > 0 ? Scanner.bytes(st.total) : L("很干净"),
-                           dimSub: !st.scanned || st.total == 0, compact: compact) {
-                    store.section = .category(k)
-                }
+            RailButton(icon: "sparkles", title: L("清理"), selected: isCleaning,
+                       sub: store.isScanning ? L("扫描中") : !store.anyScanned ? L("未扫描")
+                            : store.junkTotal > 0 ? Scanner.bytes(store.junkTotal) : L("很干净"),
+                       dimSub: !store.anyScanned || store.junkTotal == 0, compact: compact) {
+                if !isCleaning { store.section = .category(store.lastCategory) }
             }
-            Divider().frame(width: 44).padding(.vertical, compact ? 2 : 3)
             RailButton(icon: "xmark.app", title: L("卸载"), selected: store.section == .uninstall,
                        sub: un.apps.isEmpty ? L("应用") : L("%@ 个", "\(un.apps.count)"), dimSub: un.apps.isEmpty, compact: compact) {
                 store.section = .uninstall
             }
+            RailButton(icon: "power", title: L("启动项"), selected: store.section == .startup,
+                       sub: startup.loaded ? L("%@ 个开启", "\(startup.enabledCount)") : L("登录时"), dimSub: !startup.loaded,
+                       compact: compact) { store.section = .startup }
+            RailButton(icon: "doc.on.doc", title: L("重复项"), selected: store.section == .duplicates,
+                       sub: dup.scanning ? L("扫描中") : !dup.scanned ? L("未扫描") : dup.wasted > 0 ? Scanner.bytes(dup.wasted) : L("很干净"),
+                       dimSub: !dup.scanned || dup.wasted == 0, compact: compact) { store.section = .duplicates }
+            RailButton(icon: "square.grid.2x2", title: L("空间"), selected: store.section == .diskMap,
+                       sub: SystemInfo.shared.systemDisk.map { L("剩 %@", "\(SystemInfo.size($0.free))") }, dimSub: true,
+                       compact: compact) { store.section = .diskMap }
             RailButton(icon: "memorychip", title: L("内存"), selected: store.section == .memory,
                        sub: L("压力%@", mem.snap.pressure.title), subColor: mem.snap.pressure == .normal ? nil : mem.snap.pressure.color,
                        compact: compact) { store.section = .memory }

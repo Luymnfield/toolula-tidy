@@ -43,6 +43,17 @@
   "pt": "%@ apps · %@",
   "ru": "Программ: %@ · %@"
  },
+ "%@ 个开启": {
+  "en": "%@ on",
+  "zh-Hant": "%@ 個開啟",
+  "ja": "%@ 個オン",
+  "ko": "%@개 켬",
+  "de": "%@ aktiv",
+  "fr": "%@ actifs",
+  "es": "%@ activos",
+  "pt": "%@ ativos",
+  "ru": "Вкл.: %@"
+ },
  "%@ 个文件（%@）会移到废纸篓。": {
   "en": "%@ files (%@) will be moved to the Trash.",
   "zh-Hant": "%@ 個檔案（%@）會移到垃圾桶。",
@@ -76,6 +87,17 @@
   "pt": "%@ processos",
   "ru": "Процессов: %@"
  },
+ "%@ 份，每份 %@": {
+  "en": "%@ copies, %@ each",
+  "zh-Hant": "%@ 份，每份 %@",
+  "ja": "%@ 個、各 %@",
+  "ko": "%@개, 각 %@",
+  "de": "%@ Kopien, je %@",
+  "fr": "%@ copies, %@ chacune",
+  "es": "%@ copias, %@ cada una",
+  "pt": "%@ cópias, %@ cada",
+  "ru": "Копий: %@, по %@"
+ },
  "%@ 天前 · %@": {
   "en": "%@ days ago · %@",
   "zh-Hant": "%@ 天前 · %@",
@@ -97,6 +119,17 @@
   "es": "Usada hace %@ días",
   "pt": "Usado há %@ dias",
   "ru": "Открывалась %@ дн. назад"
+ },
+ "%@ 天没改过 · %@": {
+  "en": "Unchanged for %@ days · %@",
+  "zh-Hant": "%@ 天沒改過 · %@",
+  "ja": "%@ 日間変更なし · %@",
+  "ko": "%@일 동안 수정 안 함 · %@",
+  "de": "Seit %@ Tagen unverändert · %@",
+  "fr": "Non modifié depuis %@ jours · %@",
+  "es": "Sin cambios desde hace %@ días · %@",
+  "pt": "Sem alterações há %@ dias · %@",
+  "ru": "Без изменений дней: %@ · %@"
  },
  "%@ 年多没用过": {
   "en": "Not used for %@+ years",
@@ -131,6 +164,17 @@
   "pt": "GPU de %@ núcleos",
   "ru": "ГП: ядер — %@"
  },
+ "%@ 组重复": {
+  "en": "%@ duplicate groups",
+  "zh-Hant": "%@ 組重複",
+  "ja": "%@ グループの重複",
+  "ko": "중복 그룹 %@개",
+  "de": "%@ Gruppen mit Duplikaten",
+  "fr": "%@ groupes de doublons",
+  "es": "%@ grupos duplicados",
+  "pt": "%@ grupos duplicados",
+  "ru": "Групп дубликатов: %@"
+ },
  "%@ 设备调试文件 · %@": {
   "en": "%@ Device Support Files · %@",
   "zh-Hant": "%@ 裝置除錯檔案 · %@",
@@ -152,6 +196,17 @@
   "es": "No se pudieron procesar %@ elementos",
   "pt": "Não foi possível processar %@ itens",
   "ru": "Не удалось обработать объектов: %@"
+ },
+ "%@，需要时可以从废纸篓放回去。": {
+  "en": "%@. You can put it back from the Trash if you need it.",
+  "zh-Hant": "%@，需要時可以從垃圾桶放回去。",
+  "ja": "%@。必要なときはゴミ箱から戻せます。",
+  "ko": "%@. 필요하면 휴지통에서 되돌릴 수 있습니다.",
+  "de": "%@. Bei Bedarf kannst du es aus dem Papierkorb zurücklegen.",
+  "fr": "%@. Vous pourrez le récupérer dans la Corbeille si besoin.",
+  "es": "%@. Si lo necesitas, puedes recuperarlo de la Papelera.",
+  "pt": "%@. Se precisar, você pode recuperá-lo do Lixo.",
+  "ru": "%@. При необходимости можно вернуть из Корзины."
  },
  "(系统盘)": {
   "en": " (startup disk)",
@@ -219,6 +274,17 @@
   "pt": "Cache de downloads do Cargo",
   "ru": "Кэш загрузок Cargo"
  },
+ "CocoaPods 依赖包": {
+  "en": "CocoaPods packages",
+  "zh-Hant": "CocoaPods 相依套件",
+  "ja": "CocoaPods の依存パッケージ",
+  "ko": "CocoaPods 의존성 패키지",
+  "de": "CocoaPods-Pakete",
+  "fr": "Paquets CocoaPods",
+  "es": "Paquetes de CocoaPods",
+  "pt": "Pacotes do CocoaPods",
+  "ru": "Пакеты CocoaPods"
+ },
  "CocoaPods 缓存": {
   "en": "CocoaPods Cache",
   "zh-Hant": "CocoaPods 快取",
@@ -229,6 +295,17 @@
   "es": "Caché de CocoaPods",
   "pt": "Cache do CocoaPods",
   "ru": "Кэш CocoaPods"
+ },
+ "Dart 工具缓存": {
+  "en": "Dart tool cache",
+  "zh-Hant": "Dart 工具快取",
+  "ja": "Dart ツールキャッシュ",
+  "ko": "Dart 도구 캐시",
+  "de": "Dart-Tool-Cache",
+  "fr": "Cache des outils Dart",
+  "es": "Caché de herramientas de Dart",
+  "pt": "Cache de ferramentas do Dart",
+  "ru": "Кэш инструментов Dart"
  },
  "Go 编译缓存": {
   "en": "Go Build Cache",
@@ -241,6 +318,17 @@
   "pt": "Cache de compilação do Go",
   "ru": "Кэш сборки Go"
  },
+ "Gradle / Flutter 编译产物": {
+  "en": "Gradle / Flutter build output",
+  "zh-Hant": "Gradle / Flutter 編譯產物",
+  "ja": "Gradle / Flutter のビルド成果物",
+  "ko": "Gradle / Flutter 빌드 결과물",
+  "de": "Build-Ausgabe von Gradle / Flutter",
+  "fr": "Fichiers compilés Gradle / Flutter",
+  "es": "Archivos compilados de Gradle / Flutter",
+  "pt": "Arquivos compilados do Gradle / Flutter",
+  "ru": "Результаты сборки Gradle / Flutter"
+ },
  "Gradle 缓存": {
   "en": "Gradle Cache",
   "zh-Hant": "Gradle 快取",
@@ -252,6 +340,17 @@
   "pt": "Cache do Gradle",
   "ru": "Кэш Gradle"
  },
+ "Gradle 项目缓存": {
+  "en": "Gradle project cache",
+  "zh-Hant": "Gradle 專案快取",
+  "ja": "Gradle プロジェクトキャッシュ",
+  "ko": "Gradle 프로젝트 캐시",
+  "de": "Gradle-Projektcache",
+  "fr": "Cache de projet Gradle",
+  "es": "Caché de proyecto de Gradle",
+  "pt": "Cache de projeto do Gradle",
+  "ru": "Кэш проекта Gradle"
+ },
  "Homebrew 下载缓存": {
   "en": "Homebrew Download Cache",
   "zh-Hant": "Homebrew 下載快取",
@@ -262,6 +361,61 @@
   "es": "Caché de descargas de Homebrew",
   "pt": "Cache de downloads do Homebrew",
   "ru": "Кэш загрузок Homebrew"
+ },
+ "Next.js 编译缓存": {
+  "en": "Next.js build cache",
+  "zh-Hant": "Next.js 編譯快取",
+  "ja": "Next.js のビルドキャッシュ",
+  "ko": "Next.js 빌드 캐시",
+  "de": "Next.js-Build-Cache",
+  "fr": "Cache de compilation Next.js",
+  "es": "Caché de compilación de Next.js",
+  "pt": "Cache de compilação do Next.js",
+  "ru": "Кэш сборки Next.js"
+ },
+ "Node 依赖包": {
+  "en": "Node packages",
+  "zh-Hant": "Node 相依套件",
+  "ja": "Node の依存パッケージ",
+  "ko": "Node 의존성 패키지",
+  "de": "Node-Pakete",
+  "fr": "Paquets Node",
+  "es": "Paquetes de Node",
+  "pt": "Pacotes do Node",
+  "ru": "Пакеты Node"
+ },
+ "Nuxt 编译缓存": {
+  "en": "Nuxt build cache",
+  "zh-Hant": "Nuxt 編譯快取",
+  "ja": "Nuxt のビルドキャッシュ",
+  "ko": "Nuxt 빌드 캐시",
+  "de": "Nuxt-Build-Cache",
+  "fr": "Cache de compilation Nuxt",
+  "es": "Caché de compilación de Nuxt",
+  "pt": "Cache de compilação do Nuxt",
+  "ru": "Кэш сборки Nuxt"
+ },
+ "Python 虚拟环境": {
+  "en": "Python virtual environment",
+  "zh-Hant": "Python 虛擬環境",
+  "ja": "Python 仮想環境",
+  "ko": "Python 가상 환경",
+  "de": "Virtuelle Python-Umgebung",
+  "fr": "Environnement virtuel Python",
+  "es": "Entorno virtual de Python",
+  "pt": "Ambiente virtual do Python",
+  "ru": "Виртуальное окружение Python"
+ },
+ "Rust / Maven 编译产物": {
+  "en": "Rust / Maven build output",
+  "zh-Hant": "Rust / Maven 編譯產物",
+  "ja": "Rust / Maven のビルド成果物",
+  "ko": "Rust / Maven 빌드 결과물",
+  "de": "Build-Ausgabe von Rust / Maven",
+  "fr": "Fichiers compilés Rust / Maven",
+  "es": "Archivos compilados de Rust / Maven",
+  "pt": "Arquivos compilados do Rust / Maven",
+  "ru": "Результаты сборки Rust / Maven"
  },
  "Safari、Chrome、Edge 等浏览器的网页缓存，不动书签和密码": {
   "en": "Web caches from Safari, Chrome, Edge and other browsers — bookmarks and passwords stay untouched",
@@ -284,6 +438,17 @@
   "es": "Caché de Swift Package",
   "pt": "Cache do Swift Package",
   "ru": "Кэш Swift Package"
+ },
+ "Swift 编译产物": {
+  "en": "Swift build output",
+  "zh-Hant": "Swift 編譯產物",
+  "ja": "Swift のビルド成果物",
+  "ko": "Swift 빌드 결과물",
+  "de": "Swift-Build-Ausgabe",
+  "fr": "Fichiers compilés Swift",
+  "es": "Archivos compilados de Swift",
+  "pt": "Arquivos compilados do Swift",
+  "ru": "Результаты сборки Swift"
  },
  "Windows 上的「释放内存」在 Mac 上没有意义，甚至有害：": {
   "en": "The “free up memory” trick from Windows is pointless on a Mac, even harmful:",
@@ -361,6 +526,17 @@
   "es": "Caché de Yarn",
   "pt": "Cache do Yarn",
   "ru": "Кэш Yarn"
+ },
+ "launchctl 出错（%@）": {
+  "en": "launchctl error (%@)",
+  "zh-Hant": "launchctl 發生錯誤（%@）",
+  "ja": "launchctl エラー（%@）",
+  "ko": "launchctl 오류(%@)",
+  "de": "launchctl-Fehler (%@)",
+  "fr": "Erreur launchctl (%@)",
+  "es": "Error de launchctl (%@)",
+  "pt": "Erro do launchctl (%@)",
+  "ru": "Ошибка launchctl (%@)"
  },
  "macOS 会自动管理内存。这里帮你看清楚：内存够不够用，被谁占着": {
   "en": "macOS manages memory automatically. This page shows whether you have enough and what’s using it.",
@@ -549,6 +725,28 @@
   "pt": "Local não permitido para limpeza: %@",
   "ru": "Очистка в этом месте запрещена: %@"
  },
+ "个人文件夹": {
+  "en": "Home folder",
+  "zh-Hant": "個人專屬資料夾",
+  "ja": "ホームフォルダ",
+  "ko": "홈 폴더",
+  "de": "Benutzerordner",
+  "fr": "Dossier de départ",
+  "es": "Carpeta de inicio",
+  "pt": "Pasta Pessoal",
+  "ru": "Папка пользователя"
+ },
+ "个开启中": {
+  "en": "on",
+  "zh-Hant": "個開啟中",
+  "ja": "個がオン",
+  "ko": "개 켜짐",
+  "de": "aktiv",
+  "fr": "actifs",
+  "es": "activos",
+  "pt": "ativos",
+  "ru": "включено"
+ },
  "为什么没有「释放内存」按钮？": {
   "en": "Why is there no “Free Up Memory” button?",
   "zh-Hant": "為什麼沒有「釋放記憶體」按鈕？",
@@ -593,6 +791,28 @@
   "pt": "Os ajustes, caches e dados deixados na Biblioteca serão encontrados e irão para o Lixo junto com o app",
   "ru": "Найдет ее настройки, кэш и данные в папке «Библиотеки» и переместит их в Корзину вместе с программой"
  },
+ "你的启动项": {
+  "en": "Your Startup Items",
+  "zh-Hant": "你的啟動項目",
+  "ja": "あなたの起動項目",
+  "ko": "내 시작 항목",
+  "de": "Deine Autostart-Objekte",
+  "fr": "Vos éléments de démarrage",
+  "es": "Tus ítems de arranque",
+  "pt": "Seus itens de inicialização",
+  "ru": "Ваши объекты автозапуска"
+ },
+ "保留": {
+  "en": "Keep",
+  "zh-Hant": "保留",
+  "ja": "残す",
+  "ko": "유지",
+  "de": "Behalten",
+  "fr": "Conservé",
+  "es": "Conservar",
+  "pt": "Manter",
+  "ru": "Оставить"
+ },
  "偏好设置": {
   "en": "Preferences",
   "zh-Hant": "偏好設定",
@@ -625,6 +845,17 @@
   "es": "Primero analiza y te lo muestra; solo limpia cuando lo confirmas y, por omisión, lo mueve a la Papelera",
   "pt": "Primeiro analisa e mostra tudo; só limpa após sua confirmação e, por padrão, move para o Lixo",
   "ru": "Сначала проверка и показ, очистка только после подтверждения; по умолчанию всё идет в Корзину"
+ },
+ "先按大小筛选，再逐字节比较内容，只有完全一样的才算重复。": {
+  "en": "Files are first matched by size, then compared byte by byte. Only identical files count as duplicates.",
+  "zh-Hant": "先依大小篩選，再逐位元組比對內容，只有完全相同的才算重複。",
+  "ja": "まずサイズで絞り込み、次に内容を1バイトずつ比較します。完全に同じものだけが重複になります。",
+  "ko": "먼저 크기로 거른 다음 내용을 바이트 단위로 비교합니다. 완전히 같은 파일만 중복으로 봅니다.",
+  "de": "Erst wird nach Größe gefiltert, dann Byte für Byte verglichen. Nur exakt gleiche Dateien gelten als Duplikate.",
+  "fr": "Les fichiers sont d’abord filtrés par taille, puis comparés octet par octet. Seuls les fichiers identiques sont considérés comme doublons.",
+  "es": "Primero se filtra por tamaño y luego se compara byte a byte. Solo los archivos idénticos cuentan como duplicados.",
+  "pt": "Primeiro filtra por tamanho, depois compara byte a byte. Só arquivos idênticos contam como duplicados.",
+  "ru": "Сначала файлы отбираются по размеру, затем сравниваются побайтово. Дубликатами считаются только полностью одинаковые."
  },
  "全不选": {
   "en": "Deselect All",
@@ -659,6 +890,17 @@
   "pt": "Análise Completa",
   "ru": "Полная проверка"
  },
+ "共 %@ 个文件，%@。每组都会留下一份，需要时可以从废纸篓放回去。": {
+  "en": "%@ files, %@. One copy in each group is kept, and you can put files back from the Trash if you need them.",
+  "zh-Hant": "共 %@ 個檔案，%@。每組都會留下一份，需要時可以從垃圾桶放回去。",
+  "ja": "合計 %@ 個のファイル、%@。各グループに1つは残り、必要なときはゴミ箱から戻せます。",
+  "ko": "파일 %@개, %@. 그룹마다 하나씩 남으며, 필요하면 휴지통에서 되돌릴 수 있습니다.",
+  "de": "%@ Dateien, %@. Von jeder Gruppe bleibt eine, und du kannst alles bei Bedarf aus dem Papierkorb zurücklegen.",
+  "fr": "%@ fichiers, %@. Une copie de chaque groupe est conservée, et vous pourrez les récupérer dans la Corbeille si besoin.",
+  "es": "%@ archivos, %@. Se conserva uno de cada grupo y, si lo necesitas, puedes recuperarlos de la Papelera.",
+  "pt": "%@ arquivos, %@. Uma cópia de cada grupo é mantida e, se precisar, você pode recuperá-los do Lixo.",
+  "ru": "Файлов: %@, %@. В каждой группе останется одна копия, а остальное можно вернуть из Корзины."
+ },
  "共 %@ 项": {
   "en": "%@ items",
   "zh-Hant": "共 %@ 項",
@@ -691,6 +933,28 @@
   "es": "Datos compartidos",
   "pt": "Dados compartilhados",
   "ru": "Общие данные"
+ },
+ "关掉只是不再自动运行，不删除任何东西，随时可以再打开。": {
+  "en": "Turning something off only stops it from running automatically. Nothing is deleted, and you can turn it back on anytime.",
+  "zh-Hant": "關掉只是不再自動執行，不會刪除任何東西，隨時可以再打開。",
+  "ja": "オフにしても自動で起動しなくなるだけで、何も削除されません。いつでもオンに戻せます。",
+  "ko": "끄면 자동 실행만 멈출 뿐 아무것도 삭제하지 않으며, 언제든 다시 켤 수 있습니다.",
+  "de": "Ausschalten verhindert nur den automatischen Start. Nichts wird gelöscht, und du kannst es jederzeit wieder einschalten.",
+  "fr": "Désactiver empêche seulement le lancement automatique. Rien n’est supprimé, et vous pouvez réactiver à tout moment.",
+  "es": "Desactivar solo impide que se abra automáticamente. No se elimina nada y puedes volver a activarlo cuando quieras.",
+  "pt": "Desativar só impede a abertura automática. Nada é apagado, e você pode reativar a qualquer momento.",
+  "ru": "Отключение лишь останавливает автозапуск. Ничего не удаляется, включить снова можно в любой момент."
+ },
+ "其他 %@ 项": {
+  "en": "%@ others",
+  "zh-Hant": "其他 %@ 項",
+  "ja": "その他 %@ 項目",
+  "ko": "기타 %@개 항목",
+  "de": "%@ weitere",
+  "fr": "%@ autres",
+  "es": "%@ más",
+  "pt": "Mais %@",
+  "ru": "Ещё %@"
  },
  "其他项目已经处理好了。下面这些被跳过了，原因写在每一项下面。": {
   "en": "Everything else was handled. The items below were skipped — the reason is shown under each one.",
@@ -780,6 +1044,28 @@
   "pt": "Memória em uso: %@ / %@ GB",
   "ru": "Использовано памяти: %@ / %@ GB"
  },
+ "内容完全一样的文件。每组留下一份，其余移到废纸篓。": {
+  "en": "Files with exactly the same content. One from each group is kept and the rest go to the Trash.",
+  "zh-Hant": "內容完全相同的檔案。每組留下一份，其餘移到垃圾桶。",
+  "ja": "内容がまったく同じファイルです。各グループに1つ残し、残りはゴミ箱に入れます。",
+  "ko": "내용이 완전히 같은 파일입니다. 그룹마다 하나만 남기고 나머지는 휴지통으로 이동합니다.",
+  "de": "Dateien mit exakt gleichem Inhalt. Von jeder Gruppe bleibt eine, der Rest kommt in den Papierkorb.",
+  "fr": "Fichiers au contenu strictement identique. Une copie de chaque groupe est conservée, le reste va dans la Corbeille.",
+  "es": "Archivos con exactamente el mismo contenido. Se conserva uno de cada grupo y el resto va a la Papelera.",
+  "pt": "Arquivos com conteúdo exatamente igual. Uma cópia de cada grupo é mantida e o resto vai para o Lixo.",
+  "ru": "Файлы с полностью одинаковым содержимым. В каждой группе остаётся одна копия, остальные перемещаются в Корзину."
+ },
+ "内容完全一样的文件，每组留一份": {
+  "en": "Files with identical content; keep one per group",
+  "zh-Hant": "內容完全相同的檔案，每組留一份",
+  "ja": "内容が同じファイル。各グループに1つ残します",
+  "ko": "내용이 같은 파일, 그룹마다 하나만 남기기",
+  "de": "Dateien mit gleichem Inhalt, eine pro Gruppe behalten",
+  "fr": "Fichiers identiques, un conservé par groupe",
+  "es": "Archivos idénticos; se conserva uno por grupo",
+  "pt": "Arquivos idênticos; mantém um por grupo",
+  "ru": "Одинаковые файлы, по одной копии в группе"
+ },
  "写到硬盘上的内存": {
   "en": "Memory written to disk",
   "zh-Hant": "寫入硬碟的記憶體",
@@ -802,6 +1088,17 @@
   "pt": "Pronto",
   "ru": "Готово"
  },
+ "删除「%@」的启动项？": {
+  "en": "Delete the startup item for “%@”?",
+  "zh-Hant": "要刪除「%@」的啟動項目嗎？",
+  "ja": "「%@」の起動項目を削除しますか？",
+  "ko": "‘%@’의 시작 항목을 삭제하겠습니까?",
+  "de": "Autostart-Objekt von „%@“ löschen?",
+  "fr": "Supprimer l’élément de démarrage de « %@ » ?",
+  "es": "¿Eliminar el ítem de arranque de “%@”?",
+  "pt": "Apagar o item de inicialização de “%@”?",
+  "ru": "Удалить объект автозапуска «%@»?"
+ },
  "删除后下次编译或安装会重新生成、重新下载。Xcode 归档里是你打包过的版本，默认不勾选。": {
   "en": "These are rebuilt or redownloaded the next time you build or install. Xcode archives hold builds you’ve packaged, so they aren’t selected by default.",
   "zh-Hant": "刪除後，下次編譯或安裝時會重新產生、重新下載。Xcode 封存中是你打包過的版本，預設不勾選。",
@@ -812,6 +1109,28 @@
   "es": "Se regenerarán o descargarán de nuevo en la próxima compilación o instalación. Los archivos de Xcode contienen tus versiones compiladas y no se seleccionan por omisión.",
   "pt": "Serão recriados ou baixados de novo na próxima compilação ou instalação. Os arquivos do Xcode guardam versões que você gerou e não vêm selecionados.",
   "ru": "При следующей сборке или установке всё будет создано или загружено заново. Архивы Xcode содержат Ваши сборки и по умолчанию не выбраны."
+ },
+ "删除这个启动项": {
+  "en": "Delete this startup item",
+  "zh-Hant": "刪除這個啟動項目",
+  "ja": "この起動項目を削除",
+  "ko": "이 시작 항목 삭제",
+  "de": "Dieses Autostart-Objekt löschen",
+  "fr": "Supprimer cet élément de démarrage",
+  "es": "Eliminar este ítem de arranque",
+  "pt": "Apagar este item de inicialização",
+  "ru": "Удалить этот объект автозапуска"
+ },
+ "刷新": {
+  "en": "Refresh",
+  "zh-Hant": "重新整理",
+  "ja": "更新",
+  "ko": "새로 고침",
+  "de": "Aktualisieren",
+  "fr": "Actualiser",
+  "es": "Actualizar",
+  "pt": "Atualizar",
+  "ru": "Обновить"
  },
  "刷新列表": {
   "en": "Refresh List",
@@ -956,6 +1275,28 @@
   "pt": "Cancelar",
   "ru": "Отменить"
  },
+ "只列出能重新生成的依赖包和编译产物，不动源代码。超过 30 天没改过的项目默认勾选。": {
+  "en": "Only lists packages and build output that can be regenerated. Source code is never touched. Projects unchanged for over 30 days are checked by default.",
+  "zh-Hant": "只列出能重新產生的相依套件和編譯產物，不動原始碼。超過 30 天沒改過的專案預設勾選。",
+  "ja": "再生成できる依存パッケージとビルド成果物だけを表示し、ソースコードには触れません。30日以上変更のないプロジェクトは最初からチェックされます。",
+  "ko": "다시 만들 수 있는 의존성 패키지와 빌드 결과물만 보여 주며, 소스 코드는 건드리지 않습니다. 30일 넘게 수정하지 않은 프로젝트는 기본으로 선택됩니다.",
+  "de": "Zeigt nur Pakete und Build-Ausgaben, die sich neu erzeugen lassen. Quellcode bleibt unberührt. Projekte, die seit über 30 Tagen unverändert sind, sind standardmäßig ausgewählt.",
+  "fr": "Seuls les paquets et fichiers compilés régénérables sont listés ; le code source n’est jamais touché. Les projets non modifiés depuis plus de 30 jours sont cochés par défaut.",
+  "es": "Solo muestra paquetes y archivos compilados que se pueden regenerar; el código fuente no se toca. Los proyectos sin cambios desde hace más de 30 días se marcan por omisión.",
+  "pt": "Lista só pacotes e arquivos compilados que podem ser gerados de novo; o código-fonte não é alterado. Projetos sem alterações há mais de 30 dias ficam marcados por padrão.",
+  "ru": "Показываются только пакеты и результаты сборки, которые можно создать заново. Исходный код не затрагивается. Проекты без изменений более 30 дней отмечены по умолчанию."
+ },
+ "只找个人文件夹里你自己的文件（不含资源库、隐藏文件夹和照片图库）。每组默认留下最早的那份，开发项目里的文件默认不勾选。": {
+  "en": "Only looks at your own files in your Home folder (not Library, hidden folders or the Photos library). The oldest copy in each group is kept by default, and files in dev projects are unchecked by default.",
+  "zh-Hant": "只找個人專屬資料夾裡你自己的檔案（不含資源庫、隱藏資料夾和照片圖庫）。每組預設留下最早的那份，開發專案裡的檔案預設不勾選。",
+  "ja": "ホームフォルダ内のあなたのファイルだけを探します（ライブラリ、隠しフォルダ、写真ライブラリは除く）。各グループでは最も古いファイルが残るよう設定され、開発プロジェクト内のファイルは最初はチェックされません。",
+  "ko": "홈 폴더에 있는 내 파일만 찾습니다(라이브러리, 숨김 폴더, 사진 보관함 제외). 각 그룹에서 가장 오래된 파일이 기본으로 남으며, 개발 프로젝트 안의 파일은 기본으로 선택되지 않습니다.",
+  "de": "Sucht nur deine eigenen Dateien im Benutzerordner (ohne Library, versteckte Ordner und Fotos-Mediathek). Pro Gruppe bleibt standardmäßig die älteste Datei; Dateien in Entwicklungsprojekten sind standardmäßig nicht ausgewählt.",
+  "fr": "Ne cherche que vos propres fichiers dans le dossier de départ (hors Bibliothèque, dossiers masqués et photothèque). Par défaut, la copie la plus ancienne de chaque groupe est conservée et les fichiers des projets de développement ne sont pas cochés.",
+  "es": "Solo busca tus propios archivos en la carpeta de inicio (sin Biblioteca, carpetas ocultas ni la fototeca). Por omisión se conserva la copia más antigua de cada grupo, y los archivos de proyectos de desarrollo no se marcan.",
+  "pt": "Busca apenas seus próprios arquivos na Pasta Pessoal (sem Biblioteca, pastas ocultas e fototeca). Por padrão, a cópia mais antiga de cada grupo é mantida e arquivos de projetos de desenvolvimento ficam desmarcados.",
+  "ru": "Ищутся только ваши файлы в папке пользователя (без папки «Библиотека», скрытых папок и медиатеки Фото). По умолчанию в каждой группе остаётся самая старая копия, а файлы в проектах разработки не отмечаются."
+ },
  "只找个人文件夹里的文件（不含资源库、隐藏文件夹和 Toolula 数据）。默认不勾选，删除的文件会移到废纸篓。": {
   "en": "Only looks in your home folder (excluding Library, hidden folders and Toolula data). Nothing is selected by default; deleted files go to the Trash.",
   "zh-Hant": "只搜尋個人資料夾中的檔案（不含資料庫、隱藏資料夾和 Toolula 資料）。預設不勾選，刪除的檔案會移到垃圾桶。",
@@ -1022,6 +1363,17 @@
   "pt": "%@ disponíveis de %@",
   "ru": "Доступно %@ из %@"
  },
+ "可腾出 %@": {
+  "en": "Frees up %@",
+  "zh-Hant": "可騰出 %@",
+  "ja": "%@ 空けられます",
+  "ko": "%@ 확보 가능",
+  "de": "Spart %@",
+  "fr": "Libère %@",
+  "es": "Libera %@",
+  "pt": "Libera %@",
+  "ru": "Можно освободить %@"
+ },
  "同一个应用的多个进程合在一起算 · 系统进程不显示": {
   "en": "Processes of the same app are combined · System processes are hidden",
   "zh-Hant": "同一個 App 的多個處理程序合併計算 · 不顯示系統處理程序",
@@ -1043,6 +1395,39 @@
   "es": "Proceso en segundo plano",
   "pt": "Processo em segundo plano",
   "ru": "Фоновый процесс"
+ },
+ "启动项": {
+  "en": "Startup",
+  "zh-Hant": "啟動項目",
+  "ja": "起動項目",
+  "ko": "시작 항목",
+  "de": "Autostart",
+  "fr": "Démarrage",
+  "es": "Arranque",
+  "pt": "Início",
+  "ru": "Автозапуск"
+ },
+ "启动项 %@": {
+  "en": "Startup item %@",
+  "zh-Hant": "啟動項目 %@",
+  "ja": "起動項目 %@",
+  "ko": "시작 항목 %@",
+  "de": "Autostart-Objekt %@",
+  "fr": "Élément de démarrage %@",
+  "es": "Ítem de arranque %@",
+  "pt": "Item de inicialização %@",
+  "ru": "Автозапуск %@"
+ },
+ "在开发项目里": {
+  "en": "In a dev project",
+  "zh-Hant": "在開發專案裡",
+  "ja": "開発プロジェクト内",
+  "ko": "개발 프로젝트 안",
+  "de": "In Entwicklungsprojekt",
+  "fr": "Dans un projet de développement",
+  "es": "En un proyecto de desarrollo",
+  "pt": "Em projeto de desenvolvimento",
+  "ru": "В проекте разработки"
  },
  "在访达中显示": {
   "en": "Show in Finder",
@@ -1110,6 +1495,17 @@
   "pt": "OK",
   "ru": "ОК"
  },
+ "它要运行的程序已经不存在了。启动项文件会移到废纸篓，需要时可以放回去。": {
+  "en": "The app it runs no longer exists. The startup item file will be moved to the Trash, and you can put it back if needed.",
+  "zh-Hant": "它要執行的程式已經不存在了。啟動項目檔案會移到垃圾桶，需要時可以放回去。",
+  "ja": "実行するプログラムがもう存在しません。起動項目のファイルはゴミ箱に入れられ、必要なときは戻せます。",
+  "ko": "실행할 프로그램이 더 이상 없습니다. 시작 항목 파일은 휴지통으로 이동되며, 필요하면 되돌릴 수 있습니다.",
+  "de": "Das Programm, das gestartet werden soll, existiert nicht mehr. Die Autostart-Datei wird in den Papierkorb gelegt und kann bei Bedarf zurückgelegt werden.",
+  "fr": "Le programme qu’il doit lancer n’existe plus. Le fichier de l’élément de démarrage sera placé dans la Corbeille et pourra être récupéré si besoin.",
+  "es": "El programa que debía abrir ya no existe. El archivo del ítem de arranque se moverá a la Papelera y podrás recuperarlo si lo necesitas.",
+  "pt": "O programa que ele deveria abrir não existe mais. O arquivo do item de inicialização será movido para o Lixo e pode ser recuperado se precisar.",
+  "ru": "Программа, которую он запускает, больше не существует. Файл автозапуска будет перемещён в Корзину, при необходимости его можно вернуть."
+ },
  "安全清理你的 Mac": {
   "en": "Clean Your Mac Safely",
   "zh-Hant": "安全清理你的 Mac",
@@ -1153,6 +1549,28 @@
   "es": "En uso",
   "pt": "Em uso",
   "ru": "Используется"
+ },
+ "已关掉「%@」，下次登录不会再自动运行": {
+  "en": "Turned off “%@”. It won’t run automatically next time you log in",
+  "zh-Hant": "已關掉「%@」，下次登入不會再自動執行",
+  "ja": "「%@」をオフにしました。次回のログインから自動で起動しません",
+  "ko": "‘%@’을(를) 껐습니다. 다음 로그인부터 자동으로 실행되지 않습니다",
+  "de": "„%@“ ausgeschaltet. Startet beim nächsten Anmelden nicht mehr automatisch",
+  "fr": "« %@ » désactivé. Il ne se lancera plus automatiquement à la prochaine connexion",
+  "es": "“%@” desactivado. No se abrirá automáticamente la próxima vez que inicies sesión",
+  "pt": "“%@” desativado. Não abrirá mais automaticamente no próximo login",
+  "ru": "«%@» отключено и больше не будет запускаться при входе"
+ },
+ "已关掉，点一下打开": {
+  "en": "Off. Click to turn on",
+  "zh-Hant": "已關掉，點一下打開",
+  "ja": "オフ。クリックでオン",
+  "ko": "꺼짐. 클릭하여 켜기",
+  "de": "Aus. Klicken zum Einschalten",
+  "fr": "Désactivé. Cliquez pour activer",
+  "es": "Desactivado. Haz clic para activar",
+  "pt": "Desativado. Clique para ativar",
+  "ru": "Отключено. Нажмите, чтобы включить"
  },
  "已删除应用的残留": {
   "en": "Leftovers of Deleted Apps",
@@ -1208,6 +1626,50 @@
   "es": "Instaladas (%@)",
   "pt": "Instalados (%@)",
   "ru": "Установлено (%@)"
+ },
+ "已打开「%@」": {
+  "en": "Turned on “%@”",
+  "zh-Hant": "已打開「%@」",
+  "ja": "「%@」をオンにしました",
+  "ko": "‘%@’을(를) 켰습니다",
+  "de": "„%@“ eingeschaltet",
+  "fr": "« %@ » activé",
+  "es": "“%@” activado",
+  "pt": "“%@” ativado",
+  "ru": "«%@» включено"
+ },
+ "已把 %@ 个重复文件移到废纸篓，%@": {
+  "en": "Moved %@ duplicate files to the Trash, freeing %@",
+  "zh-Hant": "已將 %@ 個重複的檔案移到垃圾桶，%@",
+  "ja": "%@ 個の重複ファイルをゴミ箱に入れました（%@）",
+  "ko": "중복 파일 %@개를 휴지통으로 이동했습니다(%@)",
+  "de": "%@ doppelte Dateien in den Papierkorb gelegt (%@)",
+  "fr": "%@ fichiers en double placés dans la Corbeille (%@)",
+  "es": "Se han movido %@ archivos duplicados a la Papelera (%@)",
+  "pt": "%@ arquivos duplicados movidos para o Lixo (%@)",
+  "ru": "Дубликаты перемещены в Корзину: %@ шт., %@"
+ },
+ "已把「%@」的启动项移到废纸篓": {
+  "en": "Moved the startup item for “%@” to the Trash",
+  "zh-Hant": "已將「%@」的啟動項目移到垃圾桶",
+  "ja": "「%@」の起動項目をゴミ箱に入れました",
+  "ko": "‘%@’의 시작 항목을 휴지통으로 이동했습니다",
+  "de": "Autostart-Objekt von „%@“ in den Papierkorb gelegt",
+  "fr": "L’élément de démarrage de « %@ » a été placé dans la Corbeille",
+  "es": "El ítem de arranque de “%@” se ha movido a la Papelera",
+  "pt": "O item de inicialização de “%@” foi movido para o Lixo",
+  "ru": "Объект автозапуска «%@» перемещён в Корзину"
+ },
+ "已把「%@」移到废纸篓，%@": {
+  "en": "Moved “%@” to the Trash, freeing %@",
+  "zh-Hant": "已將「%@」移到垃圾桶，%@",
+  "ja": "「%@」をゴミ箱に入れました（%@）",
+  "ko": "‘%@’을(를) 휴지통으로 이동했습니다(%@)",
+  "de": "„%@“ in den Papierkorb gelegt (%@)",
+  "fr": "« %@ » a été placé dans la Corbeille (%@)",
+  "es": "“%@” se ha movido a la Papelera (%@)",
+  "pt": "“%@” foi movido para o Lixo (%@)",
+  "ru": "«%@» перемещено в Корзину (%@)"
  },
  "已撤销": {
   "en": "Undone",
@@ -1285,6 +1747,17 @@
   "es": "%@ seleccionados",
   "pt": "%@ selecionados",
   "ru": "Выбрано: %@"
+ },
+ "已选 %@ 个 · %@": {
+  "en": "%@ selected · %@",
+  "zh-Hant": "已選 %@ 個 · %@",
+  "ja": "%@ 個を選択 · %@",
+  "ko": "%@개 선택됨 · %@",
+  "de": "%@ ausgewählt · %@",
+  "fr": "%@ sélectionnés · %@",
+  "es": "%@ seleccionados · %@",
+  "pt": "%@ selecionados · %@",
+  "ru": "Выбрано: %@ · %@"
  },
  "已选 %@ 项": {
   "en": "%@ selected",
@@ -1484,6 +1957,17 @@
   "pt": "Lixo de desenvolvimento",
   "ru": "Мусор разработчика"
  },
+ "开发项目里的垃圾": {
+  "en": "Dev Project Junk",
+  "zh-Hant": "開發專案裡的垃圾",
+  "ja": "開発プロジェクトの不要ファイル",
+  "ko": "개발 프로젝트의 불필요한 파일",
+  "de": "Ballast in Entwicklungsprojekten",
+  "fr": "Fichiers superflus des projets",
+  "es": "Basura de proyectos de desarrollo",
+  "pt": "Arquivos descartáveis de projetos",
+  "ru": "Мусор в проектах разработки"
+ },
  "开启「完全磁盘访问权限」": {
   "en": "Turn On Full Disk Access",
   "zh-Hant": "開啟「完整磁碟取用權限」",
@@ -1494,6 +1978,17 @@
   "es": "Activa el “Acceso total al disco”",
   "pt": "Ative o “Acesso Total ao Disco”",
   "ru": "Включите «Полный доступ к диску»"
+ },
+ "开启中，点一下关掉": {
+  "en": "On. Click to turn off",
+  "zh-Hant": "開啟中，點一下關掉",
+  "ja": "オン。クリックでオフ",
+  "ko": "켜짐. 클릭하여 끄기",
+  "de": "An. Klicken zum Ausschalten",
+  "fr": "Activé. Cliquez pour désactiver",
+  "es": "Activado. Haz clic para desactivar",
+  "pt": "Ativado. Clique para desativar",
+  "ru": "Включено. Нажмите, чтобы отключить"
  },
  "开启后才能查看和清空废纸篓，并清理部分受保护的缓存。": {
   "en": "This is needed to view and empty the Trash and to clean some protected caches.",
@@ -1506,6 +2001,17 @@
   "pt": "É necessário para ver e esvaziar o Lixo e limpar alguns caches protegidos.",
   "ru": "Нужен, чтобы просматривать и очищать Корзину и удалять часть защищенного кэша."
  },
+ "开始查找": {
+  "en": "Start Search",
+  "zh-Hant": "開始尋找",
+  "ja": "検索を開始",
+  "ko": "찾기 시작",
+  "de": "Suche starten",
+  "fr": "Lancer la recherche",
+  "es": "Empezar a buscar",
+  "pt": "Iniciar busca",
+  "ru": "Начать поиск"
+ },
  "开机启动项": {
   "en": "Startup Items",
   "zh-Hant": "登入項目",
@@ -1516,6 +2022,17 @@
   "es": "Ítems de inicio",
   "pt": "Itens de início",
   "ru": "Объекты входа"
+ },
+ "开机就运行，需要管理员权限才能更改，这里只显示。可以在系统设置的「登录项」里关掉。": {
+  "en": "Runs at startup and needs administrator access to change, so it’s shown here only. You can turn it off in System Settings under “Login Items”.",
+  "zh-Hant": "開機就執行，需要管理者權限才能更改，這裡只顯示。可以在系統設定的「登入項目」裡關掉。",
+  "ja": "起動時に実行されます。変更には管理者権限が必要なため、ここでは表示のみです。システム設定の「ログイン項目」でオフにできます。",
+  "ko": "컴퓨터를 켜면 실행되며, 변경하려면 관리자 권한이 필요해 여기서는 보기만 할 수 있습니다. 시스템 설정의 ‘로그인 항목’에서 끌 수 있습니다.",
+  "de": "Läuft ab dem Systemstart. Zum Ändern sind Administratorrechte nötig, daher wird es hier nur angezeigt. Du kannst es in den Systemeinstellungen unter „Anmeldeobjekte“ ausschalten.",
+  "fr": "Se lance au démarrage. Le modifier nécessite des droits d’administrateur, il est donc seulement affiché ici. Vous pouvez le désactiver dans Réglages Système, section « Ouverture ».",
+  "es": "Se ejecuta al arrancar y cambiarlo requiere permisos de administrador, así que aquí solo se muestra. Puedes desactivarlo en “Ítems de inicio” en Ajustes del Sistema.",
+  "pt": "Executa na inicialização e só pode ser alterado com permissão de administrador, por isso aparece aqui apenas para consulta. Você pode desativá-lo em “Itens de Início” nos Ajustes do Sistema.",
+  "ru": "Запускается при включении компьютера. Для изменения нужны права администратора, поэтому здесь только просмотр. Отключить можно в разделе «Объекты входа» Системных настроек."
  },
  "很干净": {
   "en": "All Clean",
@@ -1528,6 +2045,39 @@
   "pt": "Tudo limpo",
   "ru": "Всё чисто"
  },
+ "所有用户登录时都会启动。这里关掉只对你自己生效。": {
+  "en": "Starts when any user logs in. Turning it off here only affects you.",
+  "zh-Hant": "所有使用者登入時都會啟動。這裡關掉只對你自己生效。",
+  "ja": "すべてのユーザのログイン時に起動します。ここでオフにしても、影響するのはあなただけです。",
+  "ko": "모든 사용자가 로그인할 때 실행됩니다. 여기서 끄면 나에게만 적용됩니다.",
+  "de": "Startet bei der Anmeldung jedes Benutzers. Ausschalten wirkt hier nur für dich.",
+  "fr": "Se lance à la connexion de chaque utilisateur. Le désactiver ici ne concerne que vous.",
+  "es": "Se abre cuando cualquier usuario inicia sesión. Desactivarlo aquí solo te afecta a ti.",
+  "pt": "Abre no login de todos os usuários. Desativar aqui afeta só você.",
+  "ru": "Запускается при входе любого пользователя. Отключение здесь действует только для вас."
+ },
+ "所有用户的启动项": {
+  "en": "Startup Items for All Users",
+  "zh-Hant": "所有使用者的啟動項目",
+  "ja": "全ユーザの起動項目",
+  "ko": "모든 사용자의 시작 항목",
+  "de": "Autostart-Objekte aller Benutzer",
+  "fr": "Éléments de démarrage de tous les utilisateurs",
+  "es": "Ítems de arranque de todos los usuarios",
+  "pt": "Itens de inicialização de todos os usuários",
+  "ru": "Автозапуск для всех пользователей"
+ },
+ "打开": {
+  "en": "Open",
+  "zh-Hant": "打開",
+  "ja": "開く",
+  "ko": "열기",
+  "de": "Öffnen",
+  "fr": "Ouvrir",
+  "es": "Abrir",
+  "pt": "Abrir",
+  "ru": "Открыть"
+ },
  "打开「完全磁盘访问权限」设置…": {
   "en": "Open Full Disk Access Settings…",
   "zh-Hant": "打開「完整磁碟取用權限」設定…",
@@ -1538,6 +2088,17 @@
   "es": "Abrir ajustes de “Acceso total al disco”…",
   "pt": "Abrir ajustes de “Acesso Total ao Disco”…",
   "ru": "Открыть настройки «Полный доступ к диску»…"
+ },
+ "打开「登录项」设置…": {
+  "en": "Open Login Items Settings…",
+  "zh-Hant": "打開「登入項目」設定…",
+  "ja": "「ログイン項目」設定を開く…",
+  "ko": "‘로그인 항목’ 설정 열기…",
+  "de": "Einstellungen für „Anmeldeobjekte“ öffnen …",
+  "fr": "Ouvrir les réglages « Ouverture »…",
+  "es": "Abrir ajustes de “Ítems de inicio”…",
+  "pt": "Abrir ajustes de “Itens de Início”…",
+  "ru": "Открыть настройки «Объекты входа»…"
  },
  "打开查看": {
   "en": "Open to see",
@@ -1572,6 +2133,17 @@
   "pt": "Encontre arquivos grandes na sua pasta pessoal",
   "ru": "Поиск больших файлов в Вашей папке пользователя"
  },
+ "把「%@」移到废纸篓？": {
+  "en": "Move “%@” to the Trash?",
+  "zh-Hant": "要將「%@」移到垃圾桶嗎？",
+  "ja": "「%@」をゴミ箱に入れますか？",
+  "ko": "‘%@’을(를) 휴지통으로 이동하겠습니까?",
+  "de": "„%@“ in den Papierkorb legen?",
+  "fr": "Placer « %@ » dans la Corbeille ?",
+  "es": "¿Mover “%@” a la Papelera?",
+  "pt": "Mover “%@” para o Lixo?",
+  "ru": "Переместить «%@» в Корзину?"
+ },
  "把这次移到废纸篓的东西放回原处": {
   "en": "Put everything moved to the Trash this time back where it was",
   "zh-Hant": "把這次移到垃圾桶的項目放回原處",
@@ -1582,6 +2154,17 @@
   "es": "Devolver a su sitio todo lo que se movió a la Papelera esta vez",
   "pt": "Devolver ao lugar original tudo o que foi movido para o Lixo desta vez",
   "ru": "Вернуть на место всё, что в этот раз было перемещено в Корзину"
+ },
+ "把重复的文件移到废纸篓？": {
+  "en": "Move duplicate files to the Trash?",
+  "zh-Hant": "要將重複的檔案移到垃圾桶嗎？",
+  "ja": "重複ファイルをゴミ箱に入れますか？",
+  "ko": "중복 파일을 휴지통으로 이동하겠습니까?",
+  "de": "Doppelte Dateien in den Papierkorb legen?",
+  "fr": "Placer les fichiers en double dans la Corbeille ?",
+  "es": "¿Mover los archivos duplicados a la Papelera?",
+  "pt": "Mover os arquivos duplicados para o Lixo?",
+  "ru": "Переместить дубликаты в Корзину?"
  },
  "拖放产生的临时文件": {
   "en": "Temporary Drag-and-Drop Files",
@@ -1682,6 +2265,17 @@
   "pt": "Cache de arquivos",
   "ru": "Кэш файлов"
  },
+ "方块越大，占的空间越多。点文件夹进去看，右键可以在访达中显示。": {
+  "en": "Bigger blocks take up more space. Click a folder to look inside, or right-click to show it in Finder.",
+  "zh-Hant": "方塊越大，佔用的空間越多。點資料夾進去看，按右鍵可以在 Finder 中顯示。",
+  "ja": "ブロックが大きいほど多くの容量を使っています。フォルダをクリックすると中を表示、右クリックでFinderに表示できます。",
+  "ko": "블록이 클수록 공간을 많이 차지합니다. 폴더를 클릭하면 안을 볼 수 있고, 오른쪽 클릭하면 Finder에서 볼 수 있습니다.",
+  "de": "Je größer ein Block, desto mehr Platz belegt er. Klicke auf einen Ordner, um hineinzusehen, oder klicke mit der rechten Maustaste, um ihn im Finder zu zeigen.",
+  "fr": "Plus un bloc est grand, plus il occupe d’espace. Cliquez sur un dossier pour voir son contenu ; clic droit pour l’afficher dans le Finder.",
+  "es": "Cuanto más grande es el bloque, más espacio ocupa. Haz clic en una carpeta para ver su contenido; con clic derecho puedes mostrarla en el Finder.",
+  "pt": "Quanto maior o bloco, mais espaço ele ocupa. Clique em uma pasta para ver o conteúdo, ou clique com o botão direito para mostrá-la no Finder.",
+  "ru": "Чем больше блок, тем больше места он занимает. Нажмите на папку, чтобы заглянуть внутрь, или нажмите правой кнопкой, чтобы показать её в Finder."
+ },
  "日志": {
   "en": "Logs",
   "zh-Hant": "記錄檔",
@@ -1737,6 +2331,17 @@
   "pt": "“Em uso” nos últimos 3 minutos",
   "ru": "«Используется» за последние 3 минуты"
  },
+ "最近在用": {
+  "en": "Recently used",
+  "zh-Hant": "最近在用",
+  "ja": "最近使用中",
+  "ko": "최근 사용 중",
+  "de": "Zuletzt benutzt",
+  "fr": "Utilisé récemment",
+  "es": "En uso reciente",
+  "pt": "Em uso recente",
+  "ru": "Недавно использовался"
+ },
  "未勾选": {
   "en": "None selected",
   "zh-Hant": "未勾選",
@@ -1758,6 +2363,17 @@
   "es": "Sin analizar",
   "pt": "Pendente",
   "ru": "Не проверено"
+ },
+ "查找重复文件": {
+  "en": "Find Duplicate Files",
+  "zh-Hant": "尋找重複的檔案",
+  "ja": "重複ファイルを探す",
+  "ko": "중복 파일 찾기",
+  "de": "Doppelte Dateien finden",
+  "fr": "Rechercher les doublons",
+  "es": "Buscar archivos duplicados",
+  "pt": "Buscar arquivos duplicados",
+  "ru": "Поиск дубликатов"
  },
  "查看内存": {
   "en": "View Memory",
@@ -1869,6 +2485,17 @@
   "pt": "Procurando arquivos relacionados…",
   "ru": "Поиск связанных файлов…"
  },
+ "正在比较文件内容，文件多时需要一两分钟…": {
+  "en": "Comparing file contents. With lots of files this can take a minute or two…",
+  "zh-Hant": "正在比對檔案內容，檔案多時需要一兩分鐘…",
+  "ja": "ファイルの内容を比較しています。ファイルが多いと1〜2分かかります…",
+  "ko": "파일 내용을 비교하는 중입니다. 파일이 많으면 1~2분 걸릴 수 있습니다…",
+  "de": "Dateiinhalte werden verglichen. Bei vielen Dateien kann das ein bis zwei Minuten dauern …",
+  "fr": "Comparaison du contenu des fichiers. S’il y en a beaucoup, cela peut prendre une minute ou deux…",
+  "es": "Comparando el contenido de los archivos. Si hay muchos, puede tardar uno o dos minutos…",
+  "pt": "Comparando o conteúdo dos arquivos. Com muitos arquivos, isso pode levar um ou dois minutos…",
+  "ru": "Сравнение содержимого файлов. Если файлов много, это займёт минуту-две…"
+ },
  "正在清理…": {
   "en": "Cleaning…",
   "zh-Hant": "正在清理…",
@@ -1957,6 +2584,28 @@
   "pt": "Normal",
   "ru": "Нормальная"
  },
+ "每组只留一份": {
+  "en": "Keep One per Group",
+  "zh-Hant": "每組只留一份",
+  "ja": "各グループに1つだけ残す",
+  "ko": "그룹마다 하나만 남기기",
+  "de": "Pro Gruppe eine behalten",
+  "fr": "Garder un par groupe",
+  "es": "Dejar uno por grupo",
+  "pt": "Manter um por grupo",
+  "ru": "Оставить по одному"
+ },
+ "每组至少要留下一个文件": {
+  "en": "Each group must keep at least one file",
+  "zh-Hant": "每組至少要留下一個檔案",
+  "ja": "各グループに少なくとも1つのファイルを残してください",
+  "ko": "각 그룹에 파일을 하나 이상 남겨야 합니다",
+  "de": "In jeder Gruppe muss mindestens eine Datei bleiben",
+  "fr": "Chaque groupe doit garder au moins un fichier",
+  "es": "Cada grupo debe conservar al menos un archivo",
+  "pt": "Cada grupo precisa manter pelo menos um arquivo",
+  "ru": "В каждой группе должен остаться хотя бы один файл"
+ },
  "永久删除（无法恢复）：%@": {
   "en": "Delete permanently (can’t be undone): %@",
   "zh-Hant": "永久刪除（無法復原）：%@",
@@ -2023,16 +2672,38 @@
   "pt": "Nenhum resto encontrado",
   "ru": "Остатков не найдено"
  },
- "没有权限读取下载文件夹。请在「系统设置 › 隐私与安全性 › 文件与文件夹」里允许 Toolula Cleaner。": {
-  "en": "No permission to read the Downloads folder. Allow Toolula Cleaner in System Settings › Privacy & Security › Files & Folders.",
-  "zh-Hant": "沒有權限讀取「下載項目」資料夾。請在「系統設定 › 隱私權與安全性 › 檔案與資料夾」中允許 Toolula Cleaner。",
-  "ja": "ダウンロードフォルダを読み取る権限がありません。「システム設定 › プライバシーとセキュリティ › ファイルとフォルダ」で Toolula Cleaner を許可してください。",
-  "ko": "다운로드 폴더를 읽을 권한이 없습니다. '시스템 설정 › 개인정보 보호 및 보안 › 파일 및 폴더'에서 Toolula Cleaner를 허용하세요.",
-  "de": "Keine Berechtigung zum Lesen des Ordners „Downloads“. Erlaube Toolula Cleaner unter „Systemeinstellungen › Datenschutz & Sicherheit › Dateien & Ordner“.",
-  "fr": "Aucune autorisation pour lire le dossier Téléchargements. Autorisez Toolula Cleaner dans Réglages Système › Confidentialité et sécurité › Fichiers et dossiers.",
-  "es": "Sin permiso para leer la carpeta Descargas. Permite Toolula Cleaner en Ajustes del Sistema › Privacidad y seguridad › Archivos y carpetas.",
-  "pt": "Sem permissão para ler a pasta Downloads. Permita o Toolula Cleaner em Ajustes do Sistema › Privacidade e Segurança › Arquivos e Pastas.",
-  "ru": "Нет доступа к папке «Загрузки». Разрешите доступ Toolula Cleaner в меню «Системные настройки» › «Конфиденциальность и безопасность» › «Файлы и папки»."
+ "没有找到自动启动的后台程序": {
+  "en": "No background apps start automatically",
+  "zh-Hant": "沒有找到自動啟動的背景程式",
+  "ja": "自動で起動するバックグラウンドプログラムはありません",
+  "ko": "자동으로 시작되는 백그라운드 프로그램이 없습니다",
+  "de": "Keine automatisch startenden Hintergrundprogramme gefunden",
+  "fr": "Aucun programme d’arrière-plan lancé automatiquement",
+  "es": "No hay programas en segundo plano que se abran automáticamente",
+  "pt": "Nenhum programa em segundo plano abre automaticamente",
+  "ru": "Фоновых программ с автозапуском не найдено"
+ },
+ "没有找到重复的文件": {
+  "en": "No duplicate files found",
+  "zh-Hant": "沒有找到重複的檔案",
+  "ja": "重複ファイルは見つかりませんでした",
+  "ko": "중복 파일이 없습니다",
+  "de": "Keine doppelten Dateien gefunden",
+  "fr": "Aucun fichier en double trouvé",
+  "es": "No se han encontrado archivos duplicados",
+  "pt": "Nenhum arquivo duplicado encontrado",
+  "ru": "Дубликаты не найдены"
+ },
+ "没有权限读取下载文件夹。请在「系统设置 › 隐私与安全性 › 文件与文件夹」里允许 Toolula Tidy。": {
+  "en": "No permission to read the Downloads folder. Allow Toolula Tidy in System Settings › Privacy & Security › Files & Folders.",
+  "zh-Hant": "沒有權限讀取「下載項目」資料夾。請在「系統設定 › 隱私權與安全性 › 檔案與資料夾」中允許 Toolula Tidy。",
+  "ja": "ダウンロードフォルダを読み取る権限がありません。「システム設定 › プライバシーとセキュリティ › ファイルとフォルダ」で Toolula Tidy を許可してください。",
+  "ko": "다운로드 폴더를 읽을 권한이 없습니다. '시스템 설정 › 개인정보 보호 및 보안 › 파일 및 폴더'에서 Toolula Tidy를 허용하세요.",
+  "de": "Keine Berechtigung zum Lesen des Ordners „Downloads“. Erlaube Toolula Tidy unter „Systemeinstellungen › Datenschutz & Sicherheit › Dateien & Ordner“.",
+  "fr": "Aucune autorisation pour lire le dossier Téléchargements. Autorisez Toolula Tidy dans Réglages Système › Confidentialité et sécurité › Fichiers et dossiers.",
+  "es": "Sin permiso para leer la carpeta Descargas. Permite Toolula Tidy en Ajustes del Sistema › Privacidad y seguridad › Archivos y carpetas.",
+  "pt": "Sem permissão para ler a pasta Downloads. Permita o Toolula Tidy em Ajustes do Sistema › Privacidade e Segurança › Arquivos e Pastas.",
+  "ru": "Нет доступа к папке «Загрузки». Разрешите доступ Toolula Tidy в меню «Системные настройки» › «Конфиденциальность и безопасность» › «Файлы и папки»."
  },
  "没有权限（可能需要「完全磁盘访问权限」，或者是系统保护的文件）": {
   "en": "No permission (Full Disk Access may be needed, or the file is protected by macOS)",
@@ -2045,6 +2716,17 @@
   "pt": "Sem permissão (pode ser necessário Acesso Total ao Disco, ou o arquivo é protegido pelo sistema)",
   "ru": "Нет доступа (возможно, нужен полный доступ к диску или файл защищён системой)"
  },
+ "没能删除「%@」": {
+  "en": "Couldn’t delete “%@”",
+  "zh-Hant": "無法刪除「%@」",
+  "ja": "「%@」を削除できませんでした",
+  "ko": "‘%@’을(를) 삭제하지 못했습니다",
+  "de": "„%@“ konnte nicht gelöscht werden",
+  "fr": "Impossible de supprimer « %@ »",
+  "es": "No se ha podido eliminar “%@”",
+  "pt": "Não foi possível apagar “%@”",
+  "ru": "Не удалось удалить «%@»"
+ },
  "没能卸载「%@」": {
   "en": "Couldn’t uninstall “%@”",
   "zh-Hant": "無法解除安裝「%@」",
@@ -2055,6 +2737,28 @@
   "es": "No se pudo desinstalar “%@”",
   "pt": "Não foi possível desinstalar “%@”",
   "ru": "Не удалось удалить «%@»"
+ },
+ "没能处理「%@」": {
+  "en": "Couldn’t process “%@”",
+  "zh-Hant": "無法處理「%@」",
+  "ja": "「%@」を処理できませんでした",
+  "ko": "‘%@’을(를) 처리하지 못했습니다",
+  "de": "„%@“ konnte nicht verarbeitet werden",
+  "fr": "Impossible de traiter « %@ »",
+  "es": "No se ha podido procesar “%@”",
+  "pt": "Não foi possível processar “%@”",
+  "ru": "Не удалось обработать «%@»"
+ },
+ "没能更改「%@」": {
+  "en": "Couldn’t change “%@”",
+  "zh-Hant": "無法更改「%@」",
+  "ja": "「%@」を変更できませんでした",
+  "ko": "‘%@’을(를) 변경하지 못했습니다",
+  "de": "„%@“ konnte nicht geändert werden",
+  "fr": "Impossible de modifier « %@ »",
+  "es": "No se ha podido cambiar “%@”",
+  "pt": "Não foi possível alterar “%@”",
+  "ru": "Не удалось изменить «%@»"
  },
  "浏览器": {
   "en": "Browsers",
@@ -2199,6 +2903,50 @@
   "pt": "Iniciado por %@",
   "ru": "Запущено: %@"
  },
+ "登录或开机时自动运行的后台程序。关掉不用的，登录更快，也更省内存。": {
+  "en": "Background apps that run at login or startup. Turn off the ones you don’t need for faster logins and less memory use.",
+  "zh-Hant": "登入或開機時自動執行的背景程式。關掉不用的，登入更快，也更省記憶體。",
+  "ja": "ログインや起動時に自動で動くバックグラウンドプログラムです。使わないものをオフにすると、ログインが速くなり、メモリも節約できます。",
+  "ko": "로그인하거나 컴퓨터를 켤 때 자동으로 실행되는 백그라운드 프로그램입니다. 안 쓰는 것을 끄면 로그인이 빨라지고 메모리도 절약됩니다.",
+  "de": "Hintergrundprogramme, die beim Anmelden oder Starten automatisch laufen. Schalte unnötige aus – so geht die Anmeldung schneller und du sparst Arbeitsspeicher.",
+  "fr": "Programmes d’arrière-plan lancés automatiquement à la connexion ou au démarrage. Désactivez ceux qui sont inutiles pour une connexion plus rapide et moins de mémoire utilisée.",
+  "es": "Programas en segundo plano que se abren automáticamente al iniciar sesión o al arrancar. Desactiva los que no uses para iniciar sesión más rápido y ahorrar memoria.",
+  "pt": "Programas em segundo plano que abrem automaticamente no login ou na inicialização. Desative os que não usa para fazer login mais rápido e economizar memória.",
+  "ru": "Фоновые программы, которые автоматически запускаются при входе или включении. Отключите ненужные — вход будет быстрее, а памяти уйдёт меньше."
+ },
+ "登录或开机时自动运行的后台程序，关掉不用的": {
+  "en": "Background apps that run at login or startup. Turn off the ones you don’t need",
+  "zh-Hant": "登入或開機時自動執行的背景程式，關掉不用的",
+  "ja": "ログインや起動時に自動で動くバックグラウンドプログラム。使わないものはオフに",
+  "ko": "로그인하거나 컴퓨터를 켤 때 자동으로 실행되는 백그라운드 프로그램. 안 쓰는 것은 끄세요",
+  "de": "Hintergrundprogramme, die beim Anmelden oder Starten laufen. Schalte unnötige aus",
+  "fr": "Programmes d’arrière-plan lancés à la connexion ou au démarrage. Désactivez ceux qui sont inutiles",
+  "es": "Programas en segundo plano que se abren al iniciar sesión o al arrancar. Desactiva los que no uses",
+  "pt": "Programas em segundo plano que abrem no login ou na inicialização. Desative os que não usa",
+  "ru": "Фоновые программы, которые запускаются при входе или включении. Отключите ненужные"
+ },
+ "登录时": {
+  "en": "At login",
+  "zh-Hant": "登入時",
+  "ja": "ログイン時",
+  "ko": "로그인 시",
+  "de": "Beim Login",
+  "fr": "Connexion",
+  "es": "Al iniciar",
+  "pt": "No login",
+  "ru": "При входе"
+ },
+ "登录时为你启动。关掉后不再自动运行，随时可以再打开。": {
+  "en": "Starts when you log in. Turn it off and it won’t run automatically; you can turn it back on anytime.",
+  "zh-Hant": "登入時為你啟動。關掉後不再自動執行，隨時可以再打開。",
+  "ja": "ログイン時に起動します。オフにすると自動で起動しなくなり、いつでもオンに戻せます。",
+  "ko": "로그인할 때 실행됩니다. 끄면 더 이상 자동으로 실행되지 않으며, 언제든 다시 켤 수 있습니다.",
+  "de": "Startet bei deiner Anmeldung. Ausgeschaltet läuft es nicht mehr automatisch – du kannst es jederzeit wieder einschalten.",
+  "fr": "Se lance à votre connexion. Une fois désactivé, il ne se lance plus automatiquement ; vous pouvez le réactiver à tout moment.",
+  "es": "Se abre al iniciar tu sesión. Si lo desactivas, ya no se abrirá automáticamente; puedes volver a activarlo cuando quieras.",
+  "pt": "Abre quando você faz login. Desativado, não abre mais automaticamente; você pode reativá-lo a qualquer momento.",
+  "ru": "Запускается при вашем входе. После отключения перестанет запускаться автоматически; включить снова можно в любой момент."
+ },
  "白天模式": {
   "en": "Light",
   "zh-Hant": "淺色模式",
@@ -2210,6 +2958,17 @@
   "pt": "Claro",
   "ru": "Светлое"
  },
+ "看看空间都被谁占了，一层层点进去找": {
+  "en": "See what’s taking up space, folder by folder",
+  "zh-Hant": "看看空間都被誰佔了，一層層點進去找",
+  "ja": "何が容量を使っているか、階層をたどって探せます",
+  "ko": "무엇이 공간을 차지하는지 한 단계씩 들어가 찾아보세요",
+  "de": "Sieh nach, was Platz belegt – Ebene für Ebene",
+  "fr": "Voyez ce qui occupe l’espace, dossier par dossier",
+  "es": "Descubre qué ocupa espacio, carpeta a carpeta",
+  "pt": "Veja o que ocupa espaço, pasta por pasta",
+  "ru": "Посмотрите, что занимает место, уровень за уровнем"
+ },
  "硬盘剩 %@": {
   "en": "%@ free",
   "zh-Hant": "硬碟剩 %@",
@@ -2220,6 +2979,17 @@
   "es": "Disco: %@ libres",
   "pt": "Disco: %@ livres",
   "ru": "Своб. на диске: %@"
+ },
+ "硬盘还剩 %@": {
+  "en": "%@ free on disk",
+  "zh-Hant": "硬碟還剩 %@",
+  "ja": "ディスクの空き %@",
+  "ko": "디스크 남은 공간 %@",
+  "de": "Noch %@ frei",
+  "fr": "%@ disponibles sur le disque",
+  "es": "Quedan %@ en el disco",
+  "pt": "Restam %@ no disco",
+  "ru": "Свободно на диске: %@"
  },
  "硬盘（%@）": {
   "en": "Disk (%@)",
@@ -2265,6 +3035,17 @@
   "pt": "Será movido para o Lixo",
   "ru": "В Корзину"
  },
+ "移到废纸篓…": {
+  "en": "Move to Trash…",
+  "zh-Hant": "移到垃圾桶…",
+  "ja": "ゴミ箱に入れる…",
+  "ko": "휴지통으로 이동…",
+  "de": "In den Papierkorb legen …",
+  "fr": "Placer dans la Corbeille…",
+  "es": "Mover a la Papelera…",
+  "pt": "Mover para o Lixo…",
+  "ru": "Переместить в Корзину…"
+ },
  "移到废纸篓：%@": {
   "en": "Move to Trash: %@",
   "zh-Hant": "移到垃圾桶：%@",
@@ -2276,6 +3057,17 @@
   "pt": "Mover para o Lixo: %@",
   "ru": "В Корзину: %@"
  },
+ "程序已不存在": {
+  "en": "App missing",
+  "zh-Hant": "程式已不存在",
+  "ja": "プログラムなし",
+  "ko": "프로그램 없음",
+  "de": "Programm fehlt",
+  "fr": "Programme introuvable",
+  "es": "Programa no encontrado",
+  "pt": "Programa ausente",
+  "ru": "Программа отсутствует"
+ },
  "空闲": {
   "en": "Free",
   "zh-Hant": "閒置",
@@ -2286,6 +3078,28 @@
   "es": "Libre",
   "pt": "Livre",
   "ru": "Свободно"
+ },
+ "空间": {
+  "en": "Space",
+  "zh-Hant": "空間",
+  "ja": "容量",
+  "ko": "공간",
+  "de": "Speicher",
+  "fr": "Espace",
+  "es": "Espacio",
+  "pt": "Espaço",
+  "ru": "Место"
+ },
+ "空间地图": {
+  "en": "Space Map",
+  "zh-Hant": "空間地圖",
+  "ja": "スペースマップ",
+  "ko": "공간 지도",
+  "de": "Speicherplatzkarte",
+  "fr": "Carte de l’espace",
+  "es": "Mapa de espacio",
+  "pt": "Mapa do espaço",
+  "ru": "Карта диска"
  },
  "窗口状态": {
   "en": "Window State",
@@ -2319,6 +3133,17 @@
   "es": "La usan el kernel y la gráfica; no se puede mover",
   "pt": "Usada pelo kernel e pela GPU; não pode ser liberada",
   "ru": "Используется ядром и видеокартой, не освобождается"
+ },
+ "系统后台服务": {
+  "en": "System Background Services",
+  "zh-Hant": "系統背景服務",
+  "ja": "システムのバックグラウンドサービス",
+  "ko": "시스템 백그라운드 서비스",
+  "de": "Hintergrunddienste des Systems",
+  "fr": "Services système en arrière-plan",
+  "es": "Servicios del sistema en segundo plano",
+  "pt": "Serviços do sistema em segundo plano",
+  "ru": "Фоновые службы системы"
  },
  "系统固定": {
   "en": "Wired",
@@ -2485,6 +3310,17 @@
   "pt": "Automático",
   "ru": "Автоматически"
  },
+ "运行中": {
+  "en": "Running",
+  "zh-Hant": "執行中",
+  "ja": "実行中",
+  "ko": "실행 중",
+  "de": "Läuft",
+  "fr": "En cours",
+  "es": "En ejecución",
+  "pt": "Em execução",
+  "ru": "Работает"
+ },
  "还没有清理过": {
   "en": "Nothing cleaned yet",
   "zh-Hant": "尚未清理過",
@@ -2606,6 +3442,28 @@
   "pt": "Selecione um app à esquerda",
   "ru": "Выберите программу слева"
  },
+ "重复文件": {
+  "en": "Duplicate Files",
+  "zh-Hant": "重複的檔案",
+  "ja": "重複ファイル",
+  "ko": "중복 파일",
+  "de": "Doppelte Dateien",
+  "fr": "Fichiers en double",
+  "es": "Archivos duplicados",
+  "pt": "Arquivos duplicados",
+  "ru": "Дубликаты файлов"
+ },
+ "重复项": {
+  "en": "Duplicates",
+  "zh-Hant": "重複項",
+  "ja": "重複",
+  "ko": "중복",
+  "de": "Duplikate",
+  "fr": "Doublons",
+  "es": "Duplicados",
+  "pt": "Duplicados",
+  "ru": "Дубли"
+ },
  "重新扫描": {
   "en": "Rescan",
   "zh-Hant": "重新掃描",
@@ -2616,6 +3474,17 @@
   "es": "Volver a analizar",
   "pt": "Analisar Novamente",
   "ru": "Проверить снова"
+ },
+ "重新查找": {
+  "en": "Search Again",
+  "zh-Hant": "重新尋找",
+  "ja": "もう一度探す",
+  "ko": "다시 찾기",
+  "de": "Erneut suchen",
+  "fr": "Relancer la recherche",
+  "es": "Buscar de nuevo",
+  "pt": "Buscar novamente",
+  "ru": "Искать снова"
  },
  "重新检查": {
   "en": "Check Again",
@@ -2628,6 +3497,17 @@
   "pt": "Verificar Novamente",
   "ru": "Проверить снова"
  },
+ "重新计算": {
+  "en": "Recalculate",
+  "zh-Hant": "重新計算",
+  "ja": "再計算",
+  "ko": "다시 계산",
+  "de": "Neu berechnen",
+  "fr": "Recalculer",
+  "es": "Volver a calcular",
+  "pt": "Recalcular",
+  "ru": "Пересчитать"
+ },
  "随时可以让出来": {
   "en": "Can be freed anytime",
   "zh-Hant": "隨時可以讓出來",
@@ -2639,17 +3519,6 @@
   "pt": "Pode ser liberada a qualquer momento",
   "ru": "Освобождается в любой момент"
  },
- "需授权": {
-  "en": "No access",
-  "zh-Hant": "需授權",
-  "ja": "要許可",
-  "ko": "권한 필요",
-  "de": "Kein Zugriff",
-  "fr": "Accès requis",
-  "es": "Sin acceso",
-  "pt": "Sem acesso",
-  "ru": "Нет доступа"
- },
  "需要「完全磁盘访问权限」才能查看和清空废纸篓。": {
   "en": "Full Disk Access is required to view and empty the Trash.",
   "zh-Hant": "需要「完整磁碟取用權限」才能檢視和清空垃圾桶。",
@@ -2660,6 +3529,39 @@
   "es": "Se necesita “Acceso total al disco” para ver y vaciar la Papelera.",
   "pt": "É preciso “Acesso Total ao Disco” para ver e esvaziar o Lixo.",
   "ru": "Чтобы просматривать и очищать Корзину, нужен «Полный доступ к диску»."
+ },
+ "需要管理员权限": {
+  "en": "Requires administrator access",
+  "zh-Hant": "需要管理者權限",
+  "ja": "管理者権限が必要です",
+  "ko": "관리자 권한 필요",
+  "de": "Administratorrechte erforderlich",
+  "fr": "Droits d’administrateur requis",
+  "es": "Requiere permisos de administrador",
+  "pt": "Requer permissão de administrador",
+  "ru": "Нужны права администратора"
+ },
+ "项目": {
+  "en": "Projects",
+  "zh-Hant": "專案",
+  "ja": "プロジェクト",
+  "ko": "프로젝트",
+  "de": "Projekte",
+  "fr": "Projets",
+  "es": "Proyectos",
+  "pt": "Projetos",
+  "ru": "Проекты"
+ },
+ "项目里的 node_modules、.venv、target、build 等文件夹，需要时能重新安装、重新编译": {
+  "en": "Folders like node_modules, .venv, target and build in your projects. They can be reinstalled or rebuilt when needed",
+  "zh-Hant": "專案裡的 node_modules、.venv、target、build 等資料夾，需要時能重新安裝、重新編譯",
+  "ja": "プロジェクト内の node_modules、.venv、target、build などのフォルダ。必要なときに再インストール・再ビルドできます",
+  "ko": "프로젝트 안의 node_modules, .venv, target, build 같은 폴더. 필요하면 다시 설치하거나 다시 빌드할 수 있습니다",
+  "de": "Ordner wie node_modules, .venv, target und build in deinen Projekten. Sie lassen sich bei Bedarf neu installieren oder neu erstellen",
+  "fr": "Dossiers node_modules, .venv, target, build, etc. dans vos projets. Ils peuvent être réinstallés ou recompilés au besoin",
+  "es": "Carpetas como node_modules, .venv, target o build en tus proyectos. Se pueden reinstalar o recompilar cuando haga falta",
+  "pt": "Pastas como node_modules, .venv, target e build nos seus projetos. Podem ser reinstaladas ou recompiladas quando necessário",
+  "ru": "Папки node_modules, .venv, target, build и т. п. в проектах. При необходимости их можно установить или собрать заново"
  },
  "默认移到废纸篓，后悔了还能拿回来": {
   "en": "Items go to the Trash by default, so you can get them back",

@@ -55,7 +55,7 @@ final class FastWalkerTests: FakeHomeTestCase {
         let found = Locked<[String]>([])
         var o = FastWalker.Options()
         o.skipHidden = true
-        o.skipDir = { name, _ in name.hasSuffix(".photoslibrary") }
+        o.skipDir = { name, _, _ in name.hasSuffix(".photoslibrary") }
         o.fileThreshold = 1_000_000
         o.onFile = { _, path, _ in found.mutate { $0.append(path) } }
         _ = FastWalker.sizes([home.appendingPathComponent("scan").path], options: o)
@@ -69,12 +69,4 @@ extension URL {
         try FileManager.default.createDirectory(at: deletingLastPathComponent(), withIntermediateDirectories: true)
         return self
     }
-}
-
-final class Locked<T>: @unchecked Sendable {
-    private var v: T
-    private let lock = NSLock()
-    init(_ v: T) { self.v = v }
-    var value: T { lock.lock(); defer { lock.unlock() }; return v }
-    func mutate(_ f: (inout T) -> Void) { lock.lock(); f(&v); lock.unlock() }
 }

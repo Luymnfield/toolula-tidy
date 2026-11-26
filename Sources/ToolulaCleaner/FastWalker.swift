@@ -8,8 +8,8 @@ enum FastWalker {
     struct Options {
         /// 跳过隐藏文件夹 (名字以 . 开头)
         var skipHidden = false
-        /// 不进入的文件夹 (名字, 深度: 根下第一层为 1). 会被多个线程同时调用
-        var skipDir: (@Sendable (_ name: String, _ depth: Int) -> Bool)? = nil
+        /// 不进入的文件夹 (名字, 深度: 根下第一层为 1, 所在的文件夹). 会被多个线程同时调用
+        var skipDir: (@Sendable (_ name: String, _ depth: Int, _ parent: String) -> Bool)? = nil
         /// 大于等于这个大小的普通文件会回调 onFile
         var fileThreshold: Int64 = .max
         /// 会被多个线程同时调用
@@ -137,7 +137,7 @@ enum FastWalker {
                     guard let name else { continue }
                     if options.skipHidden && name.pointee == 0x2E { continue }   // "."
                     let n = String(cString: name)
-                    if let skip = options.skipDir, skip(n, depth) { continue }
+                    if let skip = options.skipDir, skip(n, depth, job.path) { continue }
                     found.append(Job(root: job.root, path: job.path + "/" + n, depth: depth))
                 } else {
                     if linkCount > 1 { links.append((fileID, alloc)) }

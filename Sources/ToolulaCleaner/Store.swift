@@ -5,6 +5,9 @@ enum Section: Hashable {
     case home
     case category(CategoryKind)
     case uninstall
+    case startup
+    case duplicates
+    case diskMap
     case memory
 }
 
@@ -100,7 +103,11 @@ final class CleanerStore: ObservableObject {
     /// 清理记录和清理设置存在这里. 端到端测试 (--fake-home) 时用单独的设置文件, 不混进真实记录
     nonisolated(unsafe) static var defaults = UserDefaults.standard
 
-    @Published var section: Section = .home
+    @Published var section: Section = .home {
+        didSet { if case .category(let k) = section { lastCategory = k } }
+    }
+    /// 上次看的清理类别 (左侧栏「清理」打开它)
+    var lastCategory: CategoryKind = .appCaches
     @Published var states: [CategoryKind: CategoryState] =
         Dictionary(uniqueKeysWithValues: CategoryKind.allCases.map { ($0, CategoryState()) })
     @Published var history: [CleanRecord] = []

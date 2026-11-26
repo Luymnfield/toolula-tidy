@@ -4,6 +4,8 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var store: CleanerStore
     @EnvironmentObject var un: UninstallStore
+    @EnvironmentObject var dup: DuplicateStore
+    @EnvironmentObject var startup: StartupStore
     @ObservedObject var mem = MemoryMonitor.shared
     @State private var machineHover = false
 
@@ -30,7 +32,7 @@ struct HomeView: View {
         HStack(alignment: .center, spacing: 22) {
             Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 96, height: 96)
             VStack(alignment: .leading, spacing: 6) {
-                Text("Toolula Cleaner").font(.system(size: 34, weight: .bold))
+                Text("Toolula Tidy").font(.system(size: 34, weight: .bold))
                 Text(L("先扫描给你看，确认了才清理，默认移到废纸篓")).foregroundStyle(.secondary)
                 HStack(spacing: 6) {
                     Circle().fill(store.isScanning ? Color.orange : Color.green).frame(width: 8, height: 8)
@@ -138,6 +140,24 @@ struct HomeView: View {
             } trailing: {
                 if un.apps.isEmpty { Text(L("打开查看")).font(.callout).foregroundStyle(.tertiary) }
                 else { Text(L("%@ 个应用", "\(un.apps.count)")).font(.headline).monospacedDigit() }
+            }
+            HomeCard(icon: "power", title: L("启动项"), desc: L("登录或开机时自动运行的后台程序，关掉不用的")) {
+                store.section = .startup
+            } trailing: {
+                if startup.loaded { Text(L("%@ 个开启", "\(startup.enabledCount)")).font(.headline).monospacedDigit() }
+                else { Text(L("打开查看")).font(.callout).foregroundStyle(.tertiary) }
+            }
+            HomeCard(icon: "doc.on.doc", title: L("重复文件"), desc: L("内容完全一样的文件，每组留一份")) {
+                store.section = .duplicates
+            } trailing: {
+                if dup.scanning { ProgressView().controlSize(.small) }
+                else if dup.scanned { Text(dup.wasted > 0 ? Scanner.bytes(dup.wasted) : L("很干净")).font(.headline).monospacedDigit() }
+                else { Text(L("未扫描")).font(.callout).foregroundStyle(.tertiary) }
+            }
+            HomeCard(icon: "square.grid.2x2", title: L("空间地图"), desc: L("看看空间都被谁占了，一层层点进去找")) {
+                store.section = .diskMap
+            } trailing: {
+                Text(L("打开查看")).font(.callout).foregroundStyle(.tertiary)
             }
         }
     }

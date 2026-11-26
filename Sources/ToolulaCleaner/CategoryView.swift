@@ -123,6 +123,7 @@ struct CategoryView: View {
             .tint(kind == .trash ? .red : Color.toolula)
             .controlSize(.large)
             .disabled(st.selectedCount == 0 || store.cleaning || st.scanning)
+            .accessibilityIdentifier("category-clean")
         }
         .padding(.horizontal, 28).padding(.vertical, 12)
         .background(.bar)

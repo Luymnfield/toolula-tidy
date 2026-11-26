@@ -1,9 +1,9 @@
 #!/bin/zsh
-# 编译并打包成 build/Toolula Cleaner.app
+# 编译并打包成 build/Toolula Tidy.app
 set -e
 cd "$(dirname "$0")"
 swift build -c release
-APP="build/Toolula Cleaner.app"
+APP="build/Toolula Tidy.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/ToolulaCleaner "$APP/Contents/MacOS/ToolulaCleaner"
@@ -16,8 +16,8 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-  <key>CFBundleName</key><string>Toolula Cleaner</string>
-  <key>CFBundleDisplayName</key><string>Toolula Cleaner</string>
+  <key>CFBundleName</key><string>Toolula Tidy</string>
+  <key>CFBundleDisplayName</key><string>Toolula Tidy</string>
   <key>CFBundleDevelopmentRegion</key><string>en</string>
   <key>CFBundleLocalizations</key><array><string>zh-Hans</string><string>zh-Hant</string><string>en</string><string>ja</string><string>ko</string><string>de</string><string>fr</string><string>es</string><string>pt</string><string>ru</string></array>
   <key>CFBundleAllowMixedLocalizations</key><true/>
