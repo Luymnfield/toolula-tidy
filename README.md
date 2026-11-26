@@ -27,7 +27,15 @@
 ```bash
 ./build_app.sh          # 生成 build/Toolula Tidy.app
 ./scripts/install.sh    # 安装到「应用程序」
+./scripts/make_dmg.sh   # 打包成 build/ToolulaTidy-<版本>.dmg
 ```
+
+默认编译通用版（Apple 芯片 + Intel）；`FAST=1 ./build_app.sh` 只编译本机芯片，快一点。版本号写在 `VERSION` 文件里。
+
+## 下载安装
+
+在 GitHub 的 [Releases](../../releases) 里下载 DMG，打开后把 Toolula Tidy 拖进「应用程序」。
+App 还没有苹果开发者签名，第一次打开会被拦下：到「系统设置 › 隐私与安全性」点「仍要打开」即可。
 
 ## 测试
 

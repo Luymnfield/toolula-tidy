@@ -2,11 +2,15 @@
 # 编译并打包成 build/Toolula Tidy.app
 set -e
 cd "$(dirname "$0")"
-swift build -c release
+# 默认编译通用版 (Apple 芯片 + Intel 都能用); FAST=1 ./build_app.sh 只编译本机芯片, 快一点
+if [[ -n "$FAST" ]]; then ARCHS=(); else ARCHS=(--arch arm64 --arch x86_64); fi
+swift build -c release "${ARCHS[@]}"
+BIN="$(swift build -c release "${ARCHS[@]}" --show-bin-path)/ToolulaCleaner"
+VERSION="$(cat VERSION)"
 APP="build/Toolula Tidy.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp .build/release/ToolulaCleaner "$APP/Contents/MacOS/ToolulaCleaner"
+cp "$BIN" "$APP/Contents/MacOS/ToolulaCleaner"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 # 界面翻译: 先检查有没有缺的翻译 (只提醒, 不中断), 再生成各语言的 Localizable.strings
 /usr/bin/python3 Localization/extract.py --check >/dev/null 2>&1 || echo "⚠️  有缺少或不对的翻译，运行 Localization/extract.py --check 查看"
@@ -26,7 +30,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleExecutable</key><string>ToolulaCleaner</string>
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>1.0</string>
+  <key>CFBundleShortVersionString</key><string>$VERSION</string>
   <key>CFBundleVersion</key><string>1</string>
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
@@ -43,4 +47,4 @@ SIGN_ID="-"
 if security find-certificate -c "Toolula Local Signing" >/dev/null 2>&1; then SIGN_ID="Toolula Local Signing"; fi
 codesign --force -s "$SIGN_ID" "$APP"
 echo "signed with: $SIGN_ID"
-echo "built: $APP"
+echo "built: $APP ($VERSION, $(lipo -archs "$APP/Contents/MacOS/ToolulaCleaner"))"
