@@ -101,7 +101,8 @@ struct ScanOutput: Sendable {
 }
 
 enum Scanner {
-    static let home = FileManager.default.homeDirectoryForCurrentUser
+    /// 个人文件夹. 测试时换成一个临时文件夹, 这样测试永远不会碰到真实的文件
+    static var home = FileManager.default.homeDirectoryForCurrentUser
     static func u(_ p: String) -> URL { home.appendingPathComponent(p) }
 
     /// 浏览器缓存: (缓存文件夹, 名字, 应用 ID)
@@ -318,30 +319,71 @@ enum Scanner {
 
 /// 删除前的最后一道保险: 只允许删除这些文件夹 *里面* 的东西
 enum Safety {
-    static let roots = ["Library/Caches", "Library/Logs", "Library/Developer/Xcode", "Library/Developer/CoreSimulator/Caches",
+    static var roots: [String] { ["Library/Caches", "Library/Logs", "Library/Developer/Xcode", "Library/Developer/CoreSimulator/Caches",
                         ".npm/_cacache", ".gradle/caches", ".cargo/registry/cache", ".Trash", "Downloads"]
-        .map { Scanner.home.appendingPathComponent($0).path }
+        .map { Scanner.home.appendingPathComponent($0).path } }
 
-    static func allowed(_ url: URL, kind: CategoryKind) -> Bool {
-        let p = url.standardizedFileURL.path
-        let home = Scanner.home.path
-        if kind == .largeFiles {
-            return p.hasPrefix(home + "/") && !p.hasPrefix(home + "/Library/") && !p.hasPrefix(home + "/Toolula/")
-                && url.pathComponents.count > Scanner.home.pathComponents.count + 1
+    /// 只处理 "." 和 "..", 不做别的 (系统的 standardizedFileURL 会悄悄去掉 /private, 两边写法就对不上了)
+    static func normalized(_ path: String) -> String {
+        var out: [Substring] = []
+        for c in path.split(separator: "/") {
+            if c == "." { continue }
+            if c == ".." { if !out.isEmpty { out.removeLast() }; continue }
+            out.append(c)
         }
-        // 开发者里的整个缓存文件夹 (例如 ~/.npm/_cacache) 本身也可以删
-        if kind == .developer, Scanner.devItems.contains(where: { Scanner.u($0.0).path == p }) { return true }
-        return roots.contains { p.hasPrefix($0 + "/") }
+        return "/" + out.joined(separator: "/")
     }
 
-    static func remove(_ url: URL, kind: CategoryKind, permanent: Bool) throws {
+    static func allowed(_ url: URL, kind: CategoryKind) -> Bool {
+        let p = normalized(url.path)
+        let home = normalized(Scanner.home.path)
+        if kind == .largeFiles {
+            return p.hasPrefix(home + "/") && !p.hasPrefix(home + "/Library/") && !p.hasPrefix(home + "/Toolula/")
+                && p.split(separator: "/").count > home.split(separator: "/").count + 1
+        }
+        // 开发者里的整个缓存文件夹 (例如 ~/.npm/_cacache) 本身也可以删
+        if kind == .developer, Scanner.devItems.contains(where: { normalized(Scanner.u($0.0).path) == p }) { return true }
+        return roots.contains { p.hasPrefix(normalized($0) + "/") }
+    }
+
+    /// 删除一项. 移到废纸篓时返回它在废纸篓里的位置 (用来撤销), 永久删除返回 nil
+    @discardableResult
+    static func remove(_ url: URL, kind: CategoryKind, permanent: Bool) throws -> URL? {
         guard allowed(url, kind: kind) else {
             throw NSError(domain: "ToolulaCleaner", code: 1, userInfo: [NSLocalizedDescriptionKey: L("不在允许清理的位置：%@", "\(url.path)")])
         }
         if permanent {
             try FileManager.default.removeItem(at: url)
-        } else {
-            try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+            return nil
         }
+        var result: NSURL?
+        try FileManager.default.trashItem(at: url, resultingItemURL: &result)
+        return result as URL?
+    }
+
+    /// 是不是权限问题
+    static func isPermission(_ error: Error) -> Bool {
+        let ns = error as NSError
+        let posix = (ns.userInfo[NSUnderlyingErrorKey] as? NSError).flatMap { $0.domain == NSPOSIXErrorDomain ? $0.code : nil }
+            ?? (ns.domain == NSPOSIXErrorDomain ? ns.code : nil)
+        return posix == Int(EPERM) || posix == Int(EACCES)
+            || (ns.domain == NSCocoaErrorDomain && [NSFileWriteNoPermissionError, NSFileReadNoPermissionError].contains(ns.code))
+    }
+
+    /// 把系统的错误变成一句看得懂的原因
+    static func reason(_ error: Error) -> String {
+        let ns = error as NSError
+        if ns.domain == "ToolulaCleaner" { return ns.localizedDescription }
+        let posix = (ns.userInfo[NSUnderlyingErrorKey] as? NSError).flatMap { $0.domain == NSPOSIXErrorDomain ? $0.code : nil }
+            ?? (ns.domain == NSPOSIXErrorDomain ? ns.code : nil)
+        if ns.domain == NSCocoaErrorDomain, [NSFileNoSuchFileError, NSFileReadNoSuchFileError].contains(ns.code) || posix == Int(ENOENT) {
+            return L("文件已经不存在了")
+        }
+        if posix == Int(EBUSY) { return L("正在被使用") }
+        if posix == Int(EPERM) || posix == Int(EACCES)
+            || (ns.domain == NSCocoaErrorDomain && [NSFileWriteNoPermissionError, NSFileReadNoPermissionError].contains(ns.code)) {
+            return L("没有权限（可能需要「完全磁盘访问权限」，或者是系统保护的文件）")
+        }
+        return ns.localizedDescription
     }
 }

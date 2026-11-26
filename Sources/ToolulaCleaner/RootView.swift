@@ -23,8 +23,19 @@ struct RootView: View {
         }
         .overlay(alignment: .bottom) {
             if let t = store.toast {
-                Label(t, systemImage: "checkmark.circle.fill")
-                    .font(.callout.weight(.medium))
+                HStack(spacing: 12) {
+                    Label(t.text, systemImage: t.hasFailures ? "exclamationmark.circle.fill" : "checkmark.circle.fill")
+                        .font(.callout.weight(.medium))
+                        .foregroundStyle(.primary)
+                    if t.hasFailures {
+                        Button(L("查看详情")) { store.showFailures = true }.controlSize(.small)
+                            .accessibilityIdentifier("toast-details")
+                    }
+                    if let id = t.undoID {
+                        Button(L("撤销")) { store.undo(id) }.controlSize(.small).keyboardShortcut("z", modifiers: .command)
+                            .accessibilityIdentifier("toast-undo")
+                    }
+                }
                     .padding(.horizontal, 18).padding(.vertical, 11)
                     .background(.regularMaterial, in: Capsule())
                     .overlay(Capsule().stroke(Color.primary.opacity(0.08)))
@@ -34,6 +45,7 @@ struct RootView: View {
                     .onTapGesture { store.toast = nil }
             }
         }
+        .sheet(isPresented: $store.showFailures) { FailureSheet() }
         .toolbar {
             ToolbarItem(placement: .primaryAction) { SettingsMenu() }
         }
@@ -85,6 +97,8 @@ struct RootView: View {
             .buttonStyle(.plain)
             .focusEffectDisabled()
             .help(L("概览"))
+            .accessibilityLabel(L("概览"))
+            .accessibilityIdentifier("rail-home")
             .padding(.top, compact ? 8 : 10).padding(.bottom, compact ? 3 : 6)
 
             ForEach(CategoryKind.allCases) { k in
@@ -189,6 +203,7 @@ struct RailButton: View {
         .buttonStyle(.plain)
         .focusEffectDisabled()
         .accessibilityLabel(title)
+        .accessibilityIdentifier("rail-" + icon)
         .onHover { hover = $0 }
         .animation(.easeOut(duration: 0.12), value: hover)
     }

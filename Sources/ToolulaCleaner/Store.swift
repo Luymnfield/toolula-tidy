@@ -34,39 +34,98 @@ struct CategoryState {
     }
 }
 
+/// 一次移动: 原来的位置 → 废纸篓里的位置 (撤销时按这个搬回去)
+struct Move: Codable, Hashable, Sendable {
+    let from: String
+    let to: String
+}
+
+/// 没能处理的一项, 以及原因
+struct Failure: Identifiable, Hashable, Sendable {
+    var id: String { path }
+    let path: String
+    let reason: String
+    /// 是权限问题 (开启「完全磁盘访问权限」可能解决)
+    var needsAccess = false
+    var name: String { (path as NSString).lastPathComponent }
+
+    init(path: String, reason: String) { self.path = path; self.reason = reason }
+    init(path: String, error: Error) {
+        self.path = path
+        reason = Safety.reason(error)
+        needsAccess = Safety.isPermission(error)
+    }
+}
+
 struct CleanRecord: Codable, Identifiable {
     var id = UUID()
     let date: Date
     let bytes: Int64
     let count: Int
     let kinds: [String]
+    /// 移到废纸篓的项目 (永久删除的没有, 也不能撤销)
+    var moves: [Move] = []
+    var undone = false
+
+    init(date: Date, bytes: Int64, count: Int, kinds: [String], moves: [Move] = []) {
+        self.date = date; self.bytes = bytes; self.count = count; self.kinds = kinds; self.moves = moves
+    }
+
+    // 兼容旧版本保存的记录 (没有 moves / undone)
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        date = try c.decode(Date.self, forKey: .date)
+        bytes = try c.decode(Int64.self, forKey: .bytes)
+        count = try c.decode(Int.self, forKey: .count)
+        kinds = try c.decode([String].self, forKey: .kinds)
+        moves = try c.decodeIfPresent([Move].self, forKey: .moves) ?? []
+        undone = try c.decodeIfPresent(Bool.self, forKey: .undone) ?? false
+    }
+
+    /// 还能撤销: 没撤销过, 而且至少有一项还在废纸篓里
+    var canUndo: Bool { !undone && moves.contains { FileManager.default.fileExists(atPath: $0.to) } }
+}
+
+/// 底部弹出的提示, 可以带「撤销」「查看详情」按钮
+struct Toast: Equatable {
+    let id = UUID()
+    let text: String
+    var undoID: UUID? = nil
+    var hasFailures = false
 }
 
 @MainActor
 final class CleanerStore: ObservableObject {
+    /// 清理记录和清理设置存在这里. 端到端测试 (--fake-home) 时用单独的设置文件, 不混进真实记录
+    nonisolated(unsafe) static var defaults = UserDefaults.standard
+
     @Published var section: Section = .home
     @Published var states: [CategoryKind: CategoryState] =
         Dictionary(uniqueKeysWithValues: CategoryKind.allCases.map { ($0, CategoryState()) })
     @Published var history: [CleanRecord] = []
     @Published var lastScan: Date?
     @Published var cleaning = false
-    @Published var toast: String?
+    @Published var toast: Toast?
+    /// 最近一次操作里没能处理的项目 (「查看详情」里列出)
+    @Published var failures: [Failure] = []
+    @Published var showFailures = false
     /// 等待确认的清理 (弹出确认框)
     @Published var pendingClean: [CategoryKind]?
     @Published var hasFullDiskAccess = true
 
-    @Published var deleteDirectly = UserDefaults.standard.bool(forKey: "deleteDirectly") {
-        didSet { UserDefaults.standard.set(deleteDirectly, forKey: "deleteDirectly") }
+    @Published var deleteDirectly = CleanerStore.defaults.bool(forKey: "deleteDirectly") {
+        didSet { CleanerStore.defaults.set(deleteDirectly, forKey: "deleteDirectly") }
     }
-    @Published var largeThresholdMB = UserDefaults.standard.object(forKey: "largeThresholdMB") as? Int ?? 500 {
-        didSet { UserDefaults.standard.set(largeThresholdMB, forKey: "largeThresholdMB"); scan([.largeFiles]) }
+    @Published var largeThresholdMB = CleanerStore.defaults.object(forKey: "largeThresholdMB") as? Int ?? 500 {
+        didSet { CleanerStore.defaults.set(largeThresholdMB, forKey: "largeThresholdMB"); scan([.largeFiles]) }
     }
-    @Published var downloadsDays = UserDefaults.standard.object(forKey: "downloadsDays") as? Int ?? 90 {
-        didSet { UserDefaults.standard.set(downloadsDays, forKey: "downloadsDays"); scan([.downloads]) }
+    @Published var downloadsDays = CleanerStore.defaults.object(forKey: "downloadsDays") as? Int ?? 90 {
+        didSet { CleanerStore.defaults.set(downloadsDays, forKey: "downloadsDays"); scan([.downloads]) }
     }
 
     init() {
-        if let d = UserDefaults.standard.data(forKey: "history"), let h = try? JSONDecoder().decode([CleanRecord].self, from: d) {
+        if let d = CleanerStore.defaults.data(forKey: "history"), let h = try? JSONDecoder().decode([CleanRecord].self, from: d) {
             history = h
         }
     }
@@ -150,49 +209,113 @@ final class CleanerStore: ObservableObject {
         Task.detached(priority: .userInitiated) {
             var freed: Int64 = 0
             var done: [String] = []
-            var failed = 0
+            var moves: [Move] = []
+            var failures: [Failure] = []
             for (k, item, perm) in jobs {
                 do {
-                    try Safety.remove(item.url, kind: k, permanent: perm)
+                    if let to = try Safety.remove(item.url, kind: k, permanent: perm) {
+                        moves.append(Move(from: item.url.path, to: to.path))
+                    }
                     freed += item.size
                     done.append(item.id)
                 } catch {
-                    failed += 1
+                    failures.append(Failure(path: item.url.path, error: error))
                 }
             }
-            let movedToTrash = jobs.contains { !$0.2 }
-            await self.cleaned(kinds: kinds, removed: Set(done), freed: freed, failed: failed, movedToTrash: movedToTrash)
+            let result = (freed, done, moves, failures)
+            await MainActor.run {
+                self.cleaned(kinds: kinds, removed: Set(result.1), freed: result.0, moves: result.2, failures: result.3)
+            }
         }
     }
 
-    private func cleaned(kinds: [CategoryKind], removed: Set<String>, freed: Int64, failed: Int, movedToTrash: Bool) {
+    private func cleaned(kinds: [CategoryKind], removed: Set<String>, freed: Int64, moves: [Move], failures: [Failure]) {
         cleaning = false
         withAnimation {
             for k in kinds { states[k]?.items.removeAll { removed.contains($0.id) } }
         }
-        if !removed.isEmpty { record(bytes: freed, count: removed.count, kinds: kinds.map(\.longTitle)) }
+        var undoID: UUID?
+        if !removed.isEmpty { undoID = record(bytes: freed, count: removed.count, kinds: kinds.map(\.longTitle), moves: moves) }
         var msg = L("已清理 %@ 项，%@", "\(removed.count)", "\(Scanner.bytes(freed))")
-        if movedToTrash { msg += L("（在废纸篓里，清空后才真正腾出空间）") }
-        if failed > 0 { msg += L("；%@ 项没有权限或正在使用，已跳过", "\(failed)") }
-        show(msg)
+        if !moves.isEmpty { msg += L("（在废纸篓里，清空后才真正腾出空间）") }
+        if !failures.isEmpty { msg += L("；%@ 项没能处理", "\(failures.count)") }
+        report(msg, undoID: moves.isEmpty ? nil : undoID, failures: failures)
         // 废纸篓的内容变了, 重新看一下
-        if movedToTrash || kinds.contains(.trash) { scan([.trash]) }
+        if !moves.isEmpty || kinds.contains(.trash) { scan([.trash]) }
     }
 
-    /// 记一笔清理记录 (主页「清理记录」里显示)
-    func record(bytes: Int64, count: Int, kinds: [String]) {
-        history.insert(CleanRecord(date: Date(), bytes: bytes, count: count, kinds: kinds), at: 0)
+    /// 记一笔清理记录 (主页「清理记录」里显示), 返回它的 ID (撤销用)
+    @discardableResult
+    func record(bytes: Int64, count: Int, kinds: [String], moves: [Move] = []) -> UUID {
+        let r = CleanRecord(date: Date(), bytes: bytes, count: count, kinds: kinds, moves: moves)
+        history.insert(r, at: 0)
         history = Array(history.prefix(50))
-        if let d = try? JSONEncoder().encode(history) { UserDefaults.standard.set(d, forKey: "history") }
+        saveHistory()
+        return r.id
     }
 
-    func show(_ text: String) {
-        withAnimation { toast = text }
-        let t = text
+    private func saveHistory() {
+        if let d = try? JSONEncoder().encode(history) { CleanerStore.defaults.set(d, forKey: "history") }
+    }
+
+    func show(_ text: String) { report(text) }
+
+    /// 显示结果提示. 有撤销 / 失败时多停留一会儿
+    func report(_ text: String, undoID: UUID? = nil, failures: [Failure] = []) {
+        self.failures = failures
+        let t = Toast(text: text, undoID: undoID, hasFailures: !failures.isEmpty)
+        withAnimation { toast = t }
         Task {
-            try? await Task.sleep(for: .seconds(6))
+            try? await Task.sleep(for: .seconds(undoID != nil || !failures.isEmpty ? 12 : 6))
             if toast == t { withAnimation { toast = nil } }
         }
+    }
+
+    // MARK: 撤销
+
+    /// 把一次清理 / 卸载移到废纸篓的东西全部放回原处.
+    /// 原来的位置已经有同名的东西 (例如应用已经重新生成了缓存) 时跳过, 并说明原因
+    func undo(_ id: UUID, then: (@MainActor () -> Void)? = nil) {
+        guard let rec = history.first(where: { $0.id == id }), !rec.undone else { return }
+        withAnimation { toast = nil }
+        Task.detached(priority: .userInitiated) {
+            let r = Self.restore(rec.moves)
+            await MainActor.run {
+                if let i = self.history.firstIndex(where: { $0.id == id }) {
+                    self.history[i].undone = true
+                    self.saveHistory()
+                }
+                var msg = L("已放回 %@ 项", "\(r.restored)")
+                if !r.failures.isEmpty { msg += L("；%@ 项没能处理", "\(r.failures.count)") }
+                self.report(msg, failures: r.failures)
+                self.scan(CategoryKind.allCases.filter { self.state($0).scanned })
+                NotificationCenter.default.post(name: .toolulaUndoFinished, object: nil)
+                then?()
+            }
+        }
+    }
+
+    /// 真正搬回去 (测试也直接调用这个)
+    nonisolated static func restore(_ moves: [Move]) -> (restored: Int, failures: [Failure]) {
+        let fm = FileManager.default
+        var restored = 0
+        var failures: [Failure] = []
+        for m in moves {
+            guard fm.fileExists(atPath: m.to) else {
+                failures.append(Failure(path: m.from, reason: L("已经不在废纸篓里了"))); continue
+            }
+            guard !fm.fileExists(atPath: m.from) else {
+                failures.append(Failure(path: m.from, reason: L("原来的位置已经有同名的东西（可能已经重新生成）"))); continue
+            }
+            do {
+                try fm.createDirectory(at: URL(fileURLWithPath: m.from).deletingLastPathComponent(), withIntermediateDirectories: true)
+                try fm.moveItem(atPath: m.to, toPath: m.from)
+                restored += 1
+            } catch {
+                failures.append(Failure(path: m.from, error: error))
+            }
+        }
+        return (restored, failures)
     }
 
     /// 切换语言后: 已经扫描过的类别重新扫一遍 (名字、提示用新语言)
@@ -203,4 +326,9 @@ final class CleanerStore: ObservableObject {
     func openFullDiskAccessSettings() {
         NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles")!)
     }
+}
+
+extension Notification.Name {
+    /// 撤销完成 (卸载页面收到后刷新应用列表)
+    static let toolulaUndoFinished = Notification.Name("ToolulaUndoFinished")
 }

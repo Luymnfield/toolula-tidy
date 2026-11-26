@@ -9,6 +9,20 @@ struct ToolulaCleanerApp: App {
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.system
 
     init() {
+        // 端到端测试: --fake-home <临时文件夹>  把这个文件夹当成个人文件夹 (scripts/e2e.swift 用).
+        // 只接受系统临时目录里的文件夹, 不可能被指到别的地方; 清理记录也存到单独的设置文件里
+        if let i = CommandLine.arguments.firstIndex(of: "--fake-home"), i + 1 < CommandLine.arguments.count,
+           let real = realpath(CommandLine.arguments[i + 1], nil) {
+            let path = String(cString: real)
+            free(real)
+            let tmp = realpath(NSTemporaryDirectory(), nil).map { p in defer { free(p) }; return String(cString: p) } ?? "/nonexistent"
+            guard path.hasPrefix(tmp + "/") else {
+                FileHandle.standardError.write(Data("--fake-home 只能用系统临时目录里的文件夹\n".utf8))
+                exit(2)
+            }
+            Scanner.home = URL(fileURLWithPath: path, isDirectory: true)
+            CleanerStore.defaults = UserDefaults(suiteName: "com.toolula.cleaner.e2e") ?? .standard
+        }
         // 命令行自测: ToolulaCleaner --report  只扫描并打印结果, 不删除任何东西
         if CommandLine.arguments.contains("--report") {
             let ctx = ScanContext(running: Set(NSWorkspace.shared.runningApplications.compactMap(\.bundleIdentifier)),

@@ -142,6 +142,17 @@
   "pt": "Arquivos de depuração do dispositivo %1$@ · %2$@",
   "ru": "Файлы отладки устройства %1$@ · %2$@"
  },
+ "%@ 项没能处理": {
+  "en": "%@ items couldn’t be processed",
+  "zh-Hant": "%@ 項無法處理",
+  "ja": "%@項目を処理できませんでした",
+  "ko": "%@개 항목을 처리하지 못했습니다",
+  "de": "%@ Objekte konnten nicht verarbeitet werden",
+  "fr": "%@ éléments n’ont pas pu être traités",
+  "es": "No se pudieron procesar %@ elementos",
+  "pt": "Não foi possível processar %@ itens",
+  "ru": "Не удалось обработать объектов: %@"
+ },
  "(系统盘)": {
   "en": " (startup disk)",
   "zh-Hant": "(系統磁碟)",
@@ -681,6 +692,17 @@
   "pt": "Dados compartilhados",
   "ru": "Общие данные"
  },
+ "其他项目已经处理好了。下面这些被跳过了，原因写在每一项下面。": {
+  "en": "Everything else was handled. The items below were skipped — the reason is shown under each one.",
+  "zh-Hant": "其他項目已處理完成。以下項目已略過，原因寫在每一項下方。",
+  "ja": "ほかの項目は処理しました。以下の項目はスキップされました。理由はそれぞれの下に表示されています。",
+  "ko": "나머지 항목은 처리했습니다. 아래 항목은 건너뛰었으며, 이유는 각 항목 아래에 표시됩니다.",
+  "de": "Alles andere wurde erledigt. Die folgenden Objekte wurden übersprungen – der Grund steht jeweils darunter.",
+  "fr": "Tout le reste a été traité. Les éléments ci-dessous ont été ignorés ; la raison est indiquée sous chacun.",
+  "es": "Todo lo demás se procesó. Los elementos siguientes se omitieron; el motivo aparece debajo de cada uno.",
+  "pt": "Todo o resto foi processado. Os itens abaixo foram ignorados; o motivo aparece abaixo de cada um.",
+  "ru": "Всё остальное обработано. Объекты ниже пропущены — причина указана под каждым."
+ },
  "内存": {
   "en": "Memory",
   "zh-Hant": "記憶體",
@@ -901,6 +923,17 @@
   "pt": "%@",
   "ru": "%@"
  },
+ "原来的位置已经有同名的东西（可能已经重新生成）": {
+  "en": "Something with the same name is already in the original location (it may have been recreated)",
+  "zh-Hant": "原本的位置已有同名項目（可能已重新產生）",
+  "ja": "元の場所に同じ名前の項目がすでにあります（再作成された可能性があります）",
+  "ko": "원래 위치에 같은 이름의 항목이 이미 있습니다(다시 생성되었을 수 있음)",
+  "de": "Am ursprünglichen Ort gibt es bereits etwas mit demselben Namen (wurde evtl. neu erstellt)",
+  "fr": "Un élément du même nom existe déjà à l’emplacement d’origine (il a peut-être été recréé)",
+  "es": "Ya hay algo con el mismo nombre en la ubicación original (puede que se haya vuelto a crear)",
+  "pt": "Já existe algo com o mesmo nome no local original (pode ter sido recriado)",
+  "ru": "В исходном месте уже есть объект с таким же именем (возможно, он создан заново)"
+ },
  "去开启": {
   "en": "Grant Access",
   "zh-Hant": "前往開啟",
@@ -1066,6 +1099,17 @@
   "pt": "Grandes",
   "ru": "Большие"
  },
+ "好": {
+  "en": "OK",
+  "zh-Hant": "好",
+  "ja": "OK",
+  "ko": "확인",
+  "de": "OK",
+  "fr": "OK",
+  "es": "Aceptar",
+  "pt": "OK",
+  "ru": "ОК"
+ },
  "安全清理你的 Mac": {
   "en": "Clean Your Mac Safely",
   "zh-Hant": "安全清理你的 Mac",
@@ -1165,6 +1209,28 @@
   "pt": "Instalados (%@)",
   "ru": "Установлено (%@)"
  },
+ "已撤销": {
+  "en": "Undone",
+  "zh-Hant": "已還原",
+  "ja": "取り消し済み",
+  "ko": "실행 취소됨",
+  "de": "Widerrufen",
+  "fr": "Annulé",
+  "es": "Deshecho",
+  "pt": "Desfeito",
+  "ru": "Отменено"
+ },
+ "已放回 %@ 项": {
+  "en": "Put back %@ items",
+  "zh-Hant": "已放回 %@ 項",
+  "ja": "%@項目を元に戻しました",
+  "ko": "%@개 항목을 되돌렸습니다",
+  "de": "%@ Objekte zurückgelegt",
+  "fr": "%@ éléments remis en place",
+  "es": "Se devolvieron %@ elementos",
+  "pt": "%@ itens devolvidos",
+  "ru": "Возвращено объектов: %@"
+ },
  "已清理 %@ 个残留文件，%@ 移到了废纸篓": {
   "en": "Cleaned up %@ leftover files and moved %@ to the Trash",
   "zh-Hant": "已清理 %@ 個殘留檔案，%@ 已移到垃圾桶",
@@ -1197,6 +1263,17 @@
   "es": "%@ / %@ GB en uso",
   "pt": "%@ / %@ GB em uso",
   "ru": "Использовано %@ / %@ GB"
+ },
+ "已经不在废纸篓里了": {
+  "en": "No longer in the Trash",
+  "zh-Hant": "已不在垃圾桶中",
+  "ja": "もうゴミ箱にありません",
+  "ko": "더 이상 휴지통에 없습니다",
+  "de": "Nicht mehr im Papierkorb",
+  "fr": "N’est plus dans la Corbeille",
+  "es": "Ya no está en la Papelera",
+  "pt": "Não está mais no Lixo",
+  "ru": "Больше нет в Корзине"
  },
  "已选 %@": {
   "en": "%@ selected",
@@ -1495,6 +1572,17 @@
   "pt": "Encontre arquivos grandes na sua pasta pessoal",
   "ru": "Поиск больших файлов в Вашей папке пользователя"
  },
+ "把这次移到废纸篓的东西放回原处": {
+  "en": "Put everything moved to the Trash this time back where it was",
+  "zh-Hant": "把這次移到垃圾桶的項目放回原處",
+  "ja": "今回ゴミ箱に移動した項目を元の場所に戻します",
+  "ko": "이번에 휴지통으로 옮긴 항목을 원래 위치로 되돌립니다",
+  "de": "Alles, was diesmal in den Papierkorb gelegt wurde, an den ursprünglichen Ort zurücklegen",
+  "fr": "Remettre à leur place les éléments placés dans la Corbeille cette fois-ci",
+  "es": "Devolver a su sitio todo lo que se movió a la Papelera esta vez",
+  "pt": "Devolver ao lugar original tudo o que foi movido para o Lixo desta vez",
+  "ru": "Вернуть на место всё, что в этот раз было перемещено в Корзину"
+ },
  "拖放产生的临时文件": {
   "en": "Temporary Drag-and-Drop Files",
   "zh-Hant": "拖放產生的暫存檔",
@@ -1560,6 +1648,28 @@
   "es": "Buscar apps",
   "pt": "Buscar apps",
   "ru": "Поиск программ"
+ },
+ "撤销": {
+  "en": "Undo",
+  "zh-Hant": "還原",
+  "ja": "取り消す",
+  "ko": "실행 취소",
+  "de": "Widerrufen",
+  "fr": "Annuler",
+  "es": "Deshacer",
+  "pt": "Desfazer",
+  "ru": "Отменить"
+ },
+ "文件已经不存在了": {
+  "en": "The file no longer exists",
+  "zh-Hant": "檔案已不存在",
+  "ja": "ファイルはもう存在しません",
+  "ko": "파일이 더 이상 존재하지 않습니다",
+  "de": "Die Datei existiert nicht mehr",
+  "fr": "Le fichier n’existe plus",
+  "es": "El archivo ya no existe",
+  "pt": "O arquivo não existe mais",
+  "ru": "Файл больше не существует"
  },
  "文件缓存": {
   "en": "Cached Files",
@@ -1659,6 +1769,17 @@
   "es": "Ver memoria",
   "pt": "Ver Memória",
   "ru": "Открыть «Память»"
+ },
+ "查看详情": {
+  "en": "Details",
+  "zh-Hant": "查看詳細資訊",
+  "ja": "詳細を表示",
+  "ko": "자세히 보기",
+  "de": "Details",
+  "fr": "Détails",
+  "es": "Detalles",
+  "pt": "Detalhes",
+  "ru": "Подробнее"
  },
  "概览": {
   "en": "Overview",
@@ -1769,6 +1890,17 @@
   "es": "Calculando…",
   "pt": "Calculando…",
   "ru": "Подсчет…"
+ },
+ "正在被使用": {
+  "en": "In use",
+  "zh-Hant": "正在使用中",
+  "ja": "使用中です",
+  "ko": "사용 중",
+  "de": "Wird verwendet",
+  "fr": "En cours d’utilisation",
+  "es": "En uso",
+  "pt": "Em uso",
+  "ru": "Используется"
  },
  "正在计算大小…": {
   "en": "Calculating size…",
@@ -1902,16 +2034,27 @@
   "pt": "Sem permissão para ler a pasta Downloads. Permita o Toolula Cleaner em Ajustes do Sistema › Privacidade e Segurança › Arquivos e Pastas.",
   "ru": "Нет доступа к папке «Загрузки». Разрешите доступ Toolula Cleaner в меню «Системные настройки» › «Конфиденциальность и безопасность» › «Файлы и папки»."
  },
- "没能卸载「%@」：没有权限，或者应用正在使用": {
-  "en": "Couldn’t uninstall “%@”: no permission, or the app is in use",
-  "zh-Hant": "無法解除安裝「%@」：沒有權限，或 App 正在使用中",
-  "ja": "「%@」をアンインストールできませんでした：権限がないか、アプリが使用中です",
-  "ko": "'%@'을(를) 제거하지 못했습니다: 권한이 없거나 앱이 사용 중입니다",
-  "de": "„%@“ konnte nicht deinstalliert werden: keine Berechtigung oder App wird verwendet",
-  "fr": "Impossible de désinstaller « %@ » : autorisation manquante ou app en cours d’utilisation",
-  "es": "No se pudo desinstalar “%@”: falta permiso o la app está en uso",
-  "pt": "Não foi possível desinstalar “%@”: sem permissão ou o app está em uso",
-  "ru": "Не удалось удалить «%@»: нет доступа или программа используется"
+ "没有权限（可能需要「完全磁盘访问权限」，或者是系统保护的文件）": {
+  "en": "No permission (Full Disk Access may be needed, or the file is protected by macOS)",
+  "zh-Hant": "沒有權限（可能需要「完整磁碟取用權限」，或是系統保護的檔案）",
+  "ja": "権限がありません（フルディスクアクセスが必要か、システムで保護されたファイルです）",
+  "ko": "권한이 없습니다(전체 디스크 접근 권한이 필요하거나 시스템이 보호하는 파일입니다)",
+  "de": "Keine Berechtigung (evtl. ist Festplattenvollzugriff nötig oder die Datei ist vom System geschützt)",
+  "fr": "Accès refusé (l’accès complet au disque est peut-être nécessaire, ou le fichier est protégé par macOS)",
+  "es": "Sin permiso (puede que haga falta Acceso total al disco o que el archivo esté protegido por el sistema)",
+  "pt": "Sem permissão (pode ser necessário Acesso Total ao Disco, ou o arquivo é protegido pelo sistema)",
+  "ru": "Нет доступа (возможно, нужен полный доступ к диску или файл защищён системой)"
+ },
+ "没能卸载「%@」": {
+  "en": "Couldn’t uninstall “%@”",
+  "zh-Hant": "無法解除安裝「%@」",
+  "ja": "「%@」をアンインストールできませんでした",
+  "ko": "'%@'을(를) 제거하지 못했습니다",
+  "de": "„%@“ konnte nicht deinstalliert werden",
+  "fr": "Impossible de désinstaller « %@ »",
+  "es": "No se pudo desinstalar “%@”",
+  "pt": "Não foi possível desinstalar “%@”",
+  "ru": "Не удалось удалить «%@»"
  },
  "浏览器": {
   "en": "Browsers",
@@ -2551,38 +2694,16 @@
   "pt": " (no Lixo; esvazie-o para liberar espaço de verdade)",
   "ru": " (в Корзине; место освободится после ее очистки)"
  },
- "；%@ 个文件没有权限，已跳过": {
-  "en": "; %@ files skipped (no permission)",
-  "zh-Hant": "；%@ 個檔案沒有權限，已略過",
-  "ja": "。%@個のファイルは権限がないためスキップしました",
-  "ko": "; 파일 %@개는 권한이 없어 건너뜀",
-  "de": "; %@ Dateien übersprungen (keine Berechtigung)",
-  "fr": " ; %@ fichiers ignorés (autorisation manquante)",
-  "es": "; %@ archivos omitidos por falta de permiso",
-  "pt": "; %@ arquivos ignorados por falta de permissão",
-  "ru": "; пропущено файлов без доступа: %@"
- },
- "；%@ 个没有权限，已跳过": {
-  "en": "; %@ skipped (no permission)",
-  "zh-Hant": "；%@ 個沒有權限，已略過",
-  "ja": "。%@個は権限がないためスキップしました",
-  "ko": "; %@개는 권한이 없어 건너뜀",
-  "de": "; %@ übersprungen (keine Berechtigung)",
-  "fr": " ; %@ ignorés (autorisation manquante)",
-  "es": "; %@ omitidos por falta de permiso",
-  "pt": "; %@ ignorados por falta de permissão",
-  "ru": "; пропущено без доступа: %@"
- },
- "；%@ 项没有权限或正在使用，已跳过": {
-  "en": "; %@ items skipped (no permission or in use)",
-  "zh-Hant": "；%@ 項沒有權限或正在使用，已略過",
-  "ja": "。%@項目は権限がないか使用中のため、スキップしました",
-  "ko": "; %@개 항목은 권한이 없거나 사용 중이어서 건너뜀",
-  "de": "; %@ Objekte übersprungen (keine Berechtigung oder in Verwendung)",
-  "fr": " ; %@ éléments ignorés (accès refusé ou en cours d’utilisation)",
-  "es": "; %@ elementos omitidos por falta de permiso o por estar en uso",
-  "pt": "; %@ itens ignorados por falta de permissão ou por estarem em uso",
-  "ru": "; пропущено объектов: %@ (нет доступа или используются)"
+ "；%@ 项没能处理": {
+  "en": "; %@ items couldn’t be processed",
+  "zh-Hant": "；%@ 項無法處理",
+  "ja": "。%@項目は処理できませんでした",
+  "ko": "; %@개 항목은 처리하지 못함",
+  "de": "; %@ Objekte konnten nicht verarbeitet werden",
+  "fr": " ; %@ éléments n’ont pas pu être traités",
+  "es": "; no se pudieron procesar %@ elementos",
+  "pt": "; não foi possível processar %@ itens",
+  "ru": "; не обработано объектов: %@"
  },
  "；磁盘「%@」%@ 共 %@，可用 %@": {
   "en": "; Disk “%@”%@: %@ total, %@ free",

@@ -76,7 +76,7 @@ enum LeftoverPlace {
 }
 
 enum Uninstaller {
-    static let appDirs: [URL] = [URL(fileURLWithPath: "/Applications"), Scanner.u("Applications")]
+    static var appDirs: [URL] { [URL(fileURLWithPath: "/Applications"), Scanner.u("Applications")] }
 
     // MARK: 列出应用
 
@@ -198,33 +198,48 @@ enum Uninstaller {
 
     /// 删除前的保险: 应用本身只能是「应用程序」文件夹里的 .app; 残留只能在上面那些 ~/Library 文件夹 *里面*
     static func allowed(_ url: URL, isApp: Bool) -> Bool {
-        let p = url.standardizedFileURL.path
+        let p = Safety.normalized(url.path)
         if isApp {
             guard url.pathExtension == "app", !isSystemProtected(url) else { return false }
-            return appDirs.contains { d in p.hasPrefix(d.path + "/") && url.pathComponents.count <= d.pathComponents.count + 2 }
+            return appDirs.contains { d in
+                let dp = Safety.normalized(d.path)
+                return p.hasPrefix(dp + "/") && p.split(separator: "/").count <= dp.split(separator: "/").count + 2
+            }
         }
-        return LeftoverPlace.places.contains { p.hasPrefix(LeftoverPlace.root($0.0).path + "/") }
+        return LeftoverPlace.places.contains { p.hasPrefix(Safety.normalized(LeftoverPlace.root($0.0).path) + "/") }
     }
 
     /// 移到废纸篓. 应用文件夹没有权限时 (例如 App Store 安装的), 交给访达处理, 访达会要求输入密码
-    static func trash(_ url: URL, isApp: Bool) throws {
+    /// 移到废纸篓, 返回它在废纸篓里的位置 (用来撤销).
+    /// 应用文件夹没有权限时 (例如 App Store 安装的), 交给访达处理, 访达会要求输入密码
+    @discardableResult
+    static func trash(_ url: URL, isApp: Bool) throws -> URL? {
         guard allowed(url, isApp: isApp) else {
             throw NSError(domain: "ToolulaCleaner", code: 1, userInfo: [NSLocalizedDescriptionKey: L("不在允许删除的位置：%@", "\(url.path)")])
         }
         do {
-            try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+            var result: NSURL?
+            try FileManager.default.trashItem(at: url, resultingItemURL: &result)
+            return result as URL?
         } catch where isApp {
             let path = url.path.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
             let p = Process()
             p.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-            p.arguments = ["-e", "tell application \"Finder\" to delete (POSIX file \"\(path)\" as alias)"]
-            p.standardOutput = FileHandle.nullDevice
+            // 访达删除后返回废纸篓里的那一项, 取它的路径
+            p.arguments = ["-e", "tell application \"Finder\" to set t to delete (POSIX file \"\(path)\" as alias)",
+                           "-e", "return POSIX path of (t as alias)"]
+            let out = Pipe()
+            p.standardOutput = out
             p.standardError = FileHandle.nullDevice
             try p.run()
+            let data = out.fileHandleForReading.readDataToEndOfFile()
             p.waitUntilExit()
             if FileManager.default.fileExists(atPath: url.path) { throw error }
+            let trashed = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
+            return trashed.isEmpty ? nil : URL(fileURLWithPath: trashed)
         }
     }
+
 }
 
 // MARK: - 状态
@@ -263,6 +278,14 @@ final class UninstallStore: ObservableObject {
 
     init() {
         refreshRunning()
+        // 撤销 (放回应用) 后, 刷新应用列表和残留
+        observers.append(NotificationCenter.default.addObserver(forName: .toolulaUndoFinished, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self else { return }
+                if !self.apps.isEmpty { self.load() }
+                if self.orphans.scanned { self.orphans = CategoryState(); self.scanOrphans() }
+            }
+        })
         let nc = NSWorkspace.shared.notificationCenter
         for n in [NSWorkspace.didLaunchApplicationNotification, NSWorkspace.didTerminateApplicationNotification] {
             observers.append(nc.addObserver(forName: n, object: nil, queue: .main) { [weak self] _ in
@@ -344,30 +367,41 @@ final class UninstallStore: ObservableObject {
         let items = leftovers.filter(\.selected)
         busy = true
         Task.detached(priority: .userInitiated) {
-            var freed: Int64 = 0, failed = 0, count = 0
+            var freed: Int64 = 0, count = 0
+            var moves: [Move] = []
+            var failures: [Failure] = []
             var appGone = false
             do {
-                try Uninstaller.trash(app.url, isApp: true)
+                if let to = try Uninstaller.trash(app.url, isApp: true) { moves.append(Move(from: app.url.path, to: to.path)) }
                 freed += app.size ?? 0; count += 1; appGone = true
-            } catch { failed += 1 }
+            } catch {
+                failures.append(Failure(path: app.url.path, error: error))
+            }
+            // 应用本身没删掉, 就不动它的数据
             if appGone {
                 for i in items {
-                    do { try Uninstaller.trash(i.url, isApp: false); freed += i.size; count += 1 } catch { failed += 1 }
+                    do {
+                        if let to = try Uninstaller.trash(i.url, isApp: false) { moves.append(Move(from: i.url.path, to: to.path)) }
+                        freed += i.size; count += 1
+                    } catch {
+                        failures.append(Failure(path: i.url.path, error: error))
+                    }
                 }
             }
+            let result = (freed, count, moves, failures, appGone)
             await MainActor.run {
                 self.busy = false
-                guard appGone else {
-                    self.cleaner?.show(L("没能卸载「%@」：没有权限，或者应用正在使用", "\(app.name)"))
+                guard result.4 else {
+                    self.cleaner?.report(L("没能卸载「%@」", "\(app.name)"), failures: result.3)
                     return
                 }
                 withAnimation { self.apps.removeAll { $0.id == app.id } }
                 self.selectedID = nil
                 self.leftovers = []
-                self.cleaner?.record(bytes: freed, count: count, kinds: [L("卸载 %@", "\(app.name)")])
-                var msg = L("已卸载「%@」，%@ 移到了废纸篓", "\(app.name)", "\(Scanner.bytes(freed))")
-                if failed > 0 { msg += L("；%@ 个文件没有权限，已跳过", "\(failed)") }
-                self.cleaner?.show(msg)
+                let id = self.cleaner?.record(bytes: result.0, count: result.1, kinds: [L("卸载 %@", "\(app.name)")], moves: result.2)
+                var msg = L("已卸载「%@」，%@ 移到了废纸篓", "\(app.name)", "\(Scanner.bytes(result.0))")
+                if !result.3.isEmpty { msg += L("；%@ 项没能处理", "\(result.3.count)") }
+                self.cleaner?.report(msg, undoID: result.2.isEmpty ? nil : id, failures: result.3)
                 self.cleaner?.scan([.trash])
             }
         }
@@ -408,17 +442,28 @@ final class UninstallStore: ObservableObject {
         busy = true
         Task.detached(priority: .userInitiated) {
             var done = Set<String>(), freed: Int64 = 0
+            var moves: [Move] = []
+            var failures: [Failure] = []
             for i in items {
-                if (try? Uninstaller.trash(i.url, isApp: false)) != nil { done.insert(i.id); freed += i.size }
+                do {
+                    if let to = try Uninstaller.trash(i.url, isApp: false) { moves.append(Move(from: i.url.path, to: to.path)) }
+                    done.insert(i.id); freed += i.size
+                } catch {
+                    failures.append(Failure(path: i.url.path, error: error))
+                }
             }
+            let result = (done, freed, moves, failures)
             await MainActor.run {
                 self.busy = false
-                withAnimation { self.orphans.items.removeAll { done.contains($0.id) } }
-                if !done.isEmpty { self.cleaner?.record(bytes: freed, count: done.count, kinds: [L("应用残留")]) }
-                self.cleaner?.show(L("已清理 %@ 个残留文件，%@ 移到了废纸篓", "\(done.count)", "\(Scanner.bytes(freed))")
-                                   + (done.count < items.count ? L("；%@ 个没有权限，已跳过", "\(items.count - done.count)") : ""))
+                withAnimation { self.orphans.items.removeAll { result.0.contains($0.id) } }
+                var id: UUID?
+                if !result.0.isEmpty { id = self.cleaner?.record(bytes: result.1, count: result.0.count, kinds: [L("应用残留")], moves: result.2) }
+                var msg = L("已清理 %@ 个残留文件，%@ 移到了废纸篓", "\(result.0.count)", "\(Scanner.bytes(result.1))")
+                if !result.3.isEmpty { msg += L("；%@ 项没能处理", "\(result.3.count)") }
+                self.cleaner?.report(msg, undoID: result.2.isEmpty ? nil : id, failures: result.3)
                 self.cleaner?.scan([.trash])
             }
         }
     }
+
 }

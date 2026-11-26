@@ -108,6 +108,7 @@ struct HomeView: View {
                 }
                 .buttonStyle(.borderedProminent).tint(Color.toolula).controlSize(.large)
                 .disabled(store.selectedCount == 0 || store.cleaning || store.isScanning)
+                .accessibilityIdentifier("home-clean")
 
                 Button {
                     store.scan(CategoryKind.full)
@@ -160,6 +161,12 @@ struct HomeView: View {
                     Spacer()
                     Text(Scanner.bytes(r.bytes)).monospacedDigit()
                     Text(r.date, style: .date).font(.caption).foregroundStyle(.tertiary)
+                    if r.undone {
+                        Text(L("已撤销")).font(.caption).foregroundStyle(.secondary)
+                    } else if r.canUndo {
+                        Button(L("撤销")) { store.undo(r.id) }.controlSize(.small)
+                            .help(L("把这次移到废纸篓的东西放回原处"))
+                    }
                 }
                 .padding(.vertical, 6).padding(.horizontal, 10)
                 .background(RoundedRectangle(cornerRadius: 8).fill(Color.primary.opacity(0.04)))

@@ -70,9 +70,14 @@ struct UninstallView: View {
                     ScrollView {
                         LazyVStack(spacing: 2) {
                             ForEach(un.visibleApps) { app in
-                                AppRow(app: app, selected: app.id == un.selectedID, running: un.running.contains(app.bundleID))
-                                    .equatable()
-                                    .onTapGesture { un.select(app) }
+                                Button { un.select(app) } label: {
+                                    AppRow(app: app, selected: app.id == un.selectedID, running: un.running.contains(app.bundleID))
+                                        .equatable()
+                                }
+                                .buttonStyle(.plain)
+                                .focusEffectDisabled()
+                                .accessibilityLabel(app.name)
+                                .accessibilityIdentifier("app-" + app.bundleID)
                             }
                         }
                         .padding(.horizontal, 8).padding(.bottom, 8)
@@ -251,6 +256,7 @@ struct AppDetail: View {
             }
             .buttonStyle(.borderedProminent).tint(.red).controlSize(.large)
             .disabled(running || un.busy || un.leftoversLoading)
+            .accessibilityIdentifier("uninstall-button")
         }
         .padding(.horizontal, 28).padding(.vertical, 12)
         .background(.bar)
