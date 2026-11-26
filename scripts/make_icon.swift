@@ -77,17 +77,19 @@ let pink = cg(255, 105, 140)
 let navyTop = cg(23, 33, 52), navyBottom = cg(9, 14, 25)
 
 // 从乱到整齐
-let c = canvas { c in vgrad(c, navyTop, navyBottom); glow(c, CGPoint(x: 450, y: 450), 400, cg(60, 130, 200, 0.35)) }
-drawCham(c, blueCham, dst: CGPoint(x: 445, y: 448), scale: 0.92)
+let c = canvas { c in vgrad(c, navyTop, navyBottom); glow(c, CGPoint(x: 410, y: 450), 400, cg(60, 130, 200, 0.35)) }
+// 变色龙 + 方块整组的左右位置 (让整组在图标里居中)
+let dx: CGFloat = -44
+drawCham(c, blueCham, dst: CGPoint(x: 445 + dx, y: 448), scale: 0.92)
 // 乱: 五颜六色、东倒西歪 (都在圆角里面, 不贴边)
 let messy: [(CGFloat, CGFloat, CGFloat, CGFloat, CGColor)] = [
     (768, 205, 44, 0.55, cg(255, 105, 140)), (838, 228, 32, -0.5, cg(255, 190, 80)),
     (792, 282, 34, 0.95, cg(160, 125, 255)), (852, 300, 22, 0.3, cg(255, 105, 140))]
-for m in messy { box(c, CGPoint(x: m.0, y: m.1), m.2, m.3, m.4) }
+for m in messy { box(c, CGPoint(x: m.0 + dx, y: m.1), m.2, m.3, m.4) }
 // 整齐: 统一的青→蓝, 排成方阵
 for j in 0..<3 { for i in 0..<2 {
     let t = CGFloat(i + j) / 3
-    box(c, CGPoint(x: 776 + CGFloat(i) * 60, y: 400 + CGFloat(j) * 60), 48, 0, cg(115 - 40 * t, 225 - 70 * t, 245 + 10 * t))
+    box(c, CGPoint(x: 776 + dx + CGFloat(i) * 60, y: 400 + CGFloat(j) * 60), 48, 0, cg(115 - 40 * t, 225 - 70 * t, 245 + 10 * t))
 } }
 text(c, "Tidy", size: 150, centerX: 512, baseline: 862, colors: [cg(120, 225, 245), cg(80, 150, 255)])
 save(c, "toolula_tidy_icon.png")
