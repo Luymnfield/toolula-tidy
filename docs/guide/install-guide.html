@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>How to Install Toolula Tidy</title>
+<style>
+  @page { size: A4; margin: 18mm 18mm 16mm; }
+  :root { --brand: #3fb0e8; --deep: #1b2a44; --ink: #1d232b; --muted: #5d6673; --line: #e3e8ee; --soft: #f3f7fb; --warn: #b4560a; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 30pt; line-height: 1.1; margin: 0 0 6px; letter-spacing: -0.5px; }
+  h2 { font-size: 15pt; margin: 0 0 6px; }
+  h3 { font-size: 11pt; margin: 14px 0 4px; }
+  p { margin: 0 0 8px; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .cover { display: flex; gap: 22px; align-items: center; padding: 18px 0 22px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+  .cover img { width: 110px; height: 110px; }
+  .sub { color: var(--muted); font-size: 12pt; }
+  .tag { display: inline-block; background: var(--soft); border: 1px solid var(--line); border-radius: 20px; padding: 2px 10px; font-size: 9pt; color: var(--muted); margin-right: 6px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .box h3 { margin-top: 0; }
+  ul { margin: 4px 0 8px; padding-left: 18px; }
+  li { margin: 2px 0; }
+  .overview { counter-reset: s; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 6px 0 16px; }
+  .overview div { border: 1px solid var(--line); border-radius: 12px; padding: 10px; font-size: 9.5pt; }
+  .overview b { display: block; color: var(--brand); font-size: 18pt; line-height: 1; margin-bottom: 4px; }
+  .step { display: grid; grid-template-columns: 34px 1fr; gap: 12px; margin-bottom: 16px; break-inside: avoid; }
+  .num { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(160deg, #6fdcf2, #4a8cff); color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 13pt; }
+  code, .path { font-family: "SF Mono", Menlo, monospace; font-size: 9pt; background: #eef2f6; border-radius: 5px; padding: 1px 5px; }
+  pre { font-family: "SF Mono", Menlo, monospace; font-size: 9pt; background: var(--deep); color: #e9f2ff; border-radius: 10px; padding: 10px 12px; white-space: pre-wrap; margin: 6px 0 8px; }
+  .menu { font-weight: 600; }
+  .note { border-left: 3px solid var(--brand); background: #f0f8fd; padding: 8px 12px; border-radius: 0 10px 10px 0; margin: 8px 0; font-size: 9.5pt; }
+  .warn { border-left-color: #f0a23b; background: #fff7ec; }
+  /* DMG 窗口示意 */
+  .dmg { background: #fbfcfd; border: 1px solid #d5dbe2; border-radius: 12px; overflow: hidden; width: 360px; margin: 8px 0; }
+  .bar { height: 26px; background: #eceff3; border-bottom: 1px solid #d5dbe2; display: flex; align-items: center; padding: 0 10px; gap: 6px; font-size: 8.5pt; color: var(--muted); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .dmg .body { display: flex; align-items: center; justify-content: space-around; padding: 18px 10px 14px; }
+  .dmg .item { text-align: center; font-size: 9pt; }
+  .dmg .item img { width: 74px; height: 74px; display: block; margin: 0 auto 4px; }
+  .arrow { font-size: 28pt; color: var(--brand); font-weight: 300; }
+  /* 系统对话框示意 */
+  .dialog { width: 300px; background: #f6f6f7; border: 1px solid #d0d4da; border-radius: 14px; padding: 16px 16px 12px; text-align: center; font-size: 9pt; margin: 8px 0; }
+  .dialog img { width: 44px; height: 44px; }
+  .dialog b { display: block; font-size: 10pt; margin: 6px 0 4px; }
+  .btns { display: flex; gap: 8px; margin-top: 10px; }
+  .btns span { flex: 1; border-radius: 7px; padding: 4px 0; background: white; border: 1px solid #d0d4da; }
+  .btns .primary { background: #3478f6; color: white; border-color: #3478f6; }
+  .settings { width: 420px; border: 1px solid #d0d4da; border-radius: 12px; background: #fafbfc; padding: 12px 14px; font-size: 9pt; margin: 8px 0; }
+  .settings .row { display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+  .pill { border-radius: 7px; padding: 3px 10px; background: #eceff3; border: 1px solid #d0d4da; font-weight: 600; white-space: nowrap; }
+  .toggle { width: 30px; height: 17px; border-radius: 10px; background: #34c759; position: relative; display: inline-block; vertical-align: middle; }
+  .toggle::after { content: ""; position: absolute; right: 2px; top: 2px; width: 13px; height: 13px; border-radius: 50%; background: white; }
+  .shot { width: 100%; border-radius: 10px; border: 1px solid var(--line); margin: 6px 0 4px; }
+  .caption { font-size: 8.5pt; color: var(--muted); text-align: center; }
+  .side { display: flex; gap: 14px; align-items: flex-start; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; }
+  td { border-top: 1px solid var(--line); padding: 7px 6px; vertical-align: top; }
+  td:first-child { font-weight: 600; width: 36%; }
+  .foot { margin-top: 18px; color: var(--muted); font-size: 8.5pt; border-top: 1px solid var(--line); padding-top: 8px; }
+</style></head><body>
+
+<section class="page">
+  <div class="cover">
+    <img src="images/icon.png" alt="Toolula Tidy icon">
+    <div>
+      <h1>How to Install<br>Toolula Tidy</h1>
+      <p class="sub">A safe, fast cleaner for your Mac — step-by-step setup guide</p>
+      <span class="tag">Version 1.0.0</span><span class="tag">macOS 14 Sonoma or later</span><span class="tag">Apple silicon &amp; Intel</span>
+    </div>
+  </div>
+
+  <h2>Installation at a glance</h2>
+  <div class="overview">
+    <div><b>1</b>Download the <span class="path">.dmg</span> file</div>
+    <div><b>2</b>Drag the app into Applications</div>
+    <div><b>3</b>Allow it to open the first time</div>
+    <div><b>4</b>Grant Full Disk Access (recommended)</div>
+  </div>
+
+  <div class="grid2">
+    <div class="box">
+      <h3>What you need</h3>
+      <ul>
+        <li>A Mac running <b>macOS 14 Sonoma</b> or later</li>
+        <li>Apple silicon (M1 – M4) or Intel processor — one download works on both</li>
+        <li>About <b>10 MB</b> of free space</li>
+        <li>An administrator password (only to confirm the first launch)</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>What Toolula Tidy does</h3>
+      <ul>
+        <li>Cleans caches, logs, developer and project junk</li>
+        <li>Uninstalls apps together with their leftovers</li>
+        <li>Finds duplicates and shows a map of your disk</li>
+        <li>Manages startup items and shows memory use</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Safe by design.</b> Toolula Tidy always scans first and shows you what it found. Nothing is removed until you confirm,
+    items go to the Trash by default, and every clean-up can be undone.
+  </div>
+
+  <h2 style="margin-top:18px">Step by step</h2>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div>
+      <h3 style="margin-top:4px">Download the installer</h3>
+      <p>Open the project’s <b>Releases</b> page on GitHub and download <span class="path">ToolulaTidy-1.0.0.dmg</span> from the
+      <b>Assets</b> section of the latest release.</p>
+      <p class="path" style="display:inline-block">github.com/yuna7770/toolula-tidy/releases</p>
+      <div class="note">The repository is private. Sign in to GitHub with an account that has access before opening the link —
+      otherwise GitHub shows a “404 – Page not found” error.</div>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="step">
+    <div class="num">2</div>
+    <div>
+      <h3 style="margin-top:4px">Drag the app into Applications</h3>
+      <p>Double-click the downloaded <span class="path">.dmg</span> file. A window opens with the app and a shortcut to your
+      Applications folder. <b>Drag Toolula Tidy onto the Applications folder.</b></p>
+      <div class="dmg">
+        <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>&nbsp; Toolula Tidy 1.0.0</div>
+        <div class="body">
+          <div class="item"><img src="images/icon.png">Toolula Tidy</div>
+          <div class="arrow">→</div>
+          <div class="item"><img src="images/applications.png">Applications</div>
+        </div>
+      </div>
+      <p>When the copy has finished, eject the installer: click the eject button next to <b>Toolula Tidy 1.0.0</b> in the Finder
+      sidebar. You can then delete the <span class="path">.dmg</span> file.</p>
+      <div class="note warn">Don’t run the app directly from the installer window or from your Downloads folder — always start it
+      from <b>Applications</b>, so permissions and updates work correctly.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div>
+      <h3 style="margin-top:4px">Open it for the first time</h3>
+      <p>Open <b>Applications</b> and double-click <b>Toolula Tidy</b>. Because this version is not yet signed with an Apple
+      Developer ID, macOS stops it the first time and shows a message like this:</p>
+      <div class="side">
+        <div class="dialog">
+          <img src="images/icon.png">
+          <b>“Toolula Tidy” Not Opened</b>
+          Apple could not verify “Toolula Tidy” is free of malware that may harm your Mac or compromise your privacy.
+          <div class="btns"><span class="primary">Done</span><span>Move to Trash</span></div>
+        </div>
+        <div style="padding-top:8px">
+          <p>Click <b>Done</b> (not “Move to Trash”). Then allow the app once:</p>
+          <ol style="padding-left:18px;margin:0">
+            <li>Open <span class="menu">System Settings</span> → <span class="menu">Privacy &amp; Security</span>.</li>
+            <li>Scroll down to the <b>Security</b> section.</li>
+            <li>Next to <i>“Toolula Tidy” was blocked…</i>, click <b>Open Anyway</b>.</li>
+            <li>Confirm with <b>Open Anyway</b> again and enter your password.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="settings">
+        <div style="font-weight:600;margin-bottom:6px">Privacy &amp; Security › Security</div>
+        <div class="row"><span>“Toolula Tidy” was blocked to protect your Mac.</span><span class="pill">Open Anyway</span></div>
+      </div>
+      <p>You only need to do this once. From now on Toolula Tidy opens normally.</p>
+      <div class="note"><b>Prefer Terminal?</b> This command removes the download flag and has the same effect:
+        <pre>xattr -dr com.apple.quarantine "/Applications/Toolula Tidy.app"</pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="step">
+    <div class="num">4</div>
+    <div>
+      <h3 style="margin-top:4px">Grant Full Disk Access <span style="font-weight:400;color:var(--muted)">(recommended)</span></h3>
+      <p>macOS protects some folders — such as the Trash and certain caches — even from apps you trust. To let Toolula Tidy see
+      and clean them:</p>
+      <ol style="padding-left:18px">
+        <li>Open <span class="menu">System Settings</span> → <span class="menu">Privacy &amp; Security</span> → <span class="menu">Full Disk Access</span>.</li>
+        <li>Turn on the switch next to <b>Toolula Tidy</b>. If it isn’t listed, click <b>+</b>, choose it from Applications, then turn it on.</li>
+        <li>Quit and reopen Toolula Tidy when macOS asks you to.</li>
+      </ol>
+      <div class="settings" style="width:360px">
+        <div style="font-weight:600;margin-bottom:6px">Privacy &amp; Security › Full Disk Access</div>
+        <div class="row"><span style="display:flex;align-items:center;gap:8px"><img src="images/icon.png" style="width:22px;height:22px">Toolula Tidy</span><span class="toggle"></span></div>
+      </div>
+      <p>Shortcut: in Toolula Tidy, open the <b>gear menu</b> (top right) and choose <b>Open Full Disk Access Settings…</b></p>
+      <div class="note">Full Disk Access is optional. Without it the app still works, but it can’t empty the Trash or clean a few
+      protected caches. When you open <b>Downloads</b> or <b>Large Files</b>, macOS may also ask for access to those folders — click <b>Allow</b>.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div>
+      <h3 style="margin-top:4px">You’re ready</h3>
+      <p>Toolula Tidy scans the safe categories as soon as it opens. Review the results, tick what you want to remove, and click
+      <b>Clean Selected</b>. Use <b>Undo</b> in the notification (or in the cleaning history) to put things back.</p>
+      <img class="shot" src="images/main.png" alt="Toolula Tidy main window">
+      <p class="caption">The overview: how much can be cleaned, plus Clean, Uninstall, Startup, Duplicates, Space and Memory in the sidebar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>Updating, uninstalling and troubleshooting</h2>
+
+  <h3>Updating to a new version</h3>
+  <p>Download the new <span class="path">.dmg</span> from the Releases page and drag Toolula Tidy into Applications again. Choose
+  <b>Replace</b> when Finder asks. Your settings and cleaning history are kept. If the app is still unsigned you may need to
+  confirm <b>Open Anyway</b> once more (step 3).</p>
+
+  <h3>Changing the language</h3>
+  <p>Toolula Tidy follows your Mac’s language automatically (10 languages). To choose one yourself, open the <b>gear menu</b> →
+  <b>Language</b>. The change applies immediately.</p>
+
+  <h3>Uninstalling Toolula Tidy</h3>
+  <ol style="padding-left:18px">
+    <li>Quit the app, then drag <b>Toolula Tidy</b> from Applications to the Trash.</li>
+    <li>Optionally remove its settings: <span class="path">~/Library/Preferences/com.toolula.cleaner.plist</span></li>
+    <li>Remove it from <span class="menu">Privacy &amp; Security</span> → <span class="menu">Full Disk Access</span> with the <b>–</b> button.</li>
+  </ol>
+
+  <h3>Troubleshooting</h3>
+  <table>
+    <tr><td>“Toolula Tidy” is damaged and can’t be opened</td><td>The download flag is blocking it. Move the app to Applications and run the Terminal command from step 3, then open it again.</td></tr>
+    <tr><td>No “Open Anyway” button in Privacy &amp; Security</td><td>The button appears only for about an hour after a blocked launch. Try opening the app again, then go straight back to Privacy &amp; Security.</td></tr>
+    <tr><td>“You can’t open the application … because this application is not supported on this Mac”</td><td>Your Mac runs an older macOS. Toolula Tidy needs macOS 14 Sonoma or later.</td></tr>
+    <tr><td>The Trash category shows a lock or asks for access</td><td>Grant Full Disk Access (step 4), then quit and reopen the app.</td></tr>
+    <tr><td>Full Disk Access is on, but still no access</td><td>Remove Toolula Tidy from the list with <b>–</b>, add it again with <b>+</b>, and restart the app. This happens after replacing the app with a new build.</td></tr>
+    <tr><td>The Dock still shows an old icon</td><td>macOS caches icons. Quit and reopen the app; if needed, restart the Mac.</td></tr>
+    <tr><td>Something was removed by mistake</td><td>Click <b>Undo</b> in the notification, or use <b>Undo</b> next to that entry in the cleaning history on the overview page. Items moved to the Trash can also be put back from the Trash.</td></tr>
+  </table>
+
+  <div class="note" style="margin-top:14px"><b>Privacy.</b> Toolula Tidy works entirely on your Mac. It doesn’t collect data,
+  needs no account, and makes no network connections to clean your Mac.</div>
+
+  <p class="foot">Toolula Tidy 1.0.0 · Installation Guide · Screens and messages may differ slightly between macOS versions.</p>
+</section>
+</body></html>

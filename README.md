@@ -37,6 +37,8 @@
 在 GitHub 的 [Releases](../../releases) 里下载 DMG，打开后把 Toolula Tidy 拖进「应用程序」。
 App 还没有苹果开发者签名，第一次打开会被拦下：到「系统设置 › 隐私与安全性」点「仍要打开」即可。
 
+英文安装指南：[docs/Toolula-Tidy-Install-Guide.pdf](docs/Toolula-Tidy-Install-Guide.pdf)（源文件 `docs/guide/install-guide.html`，用 Chrome 打印成 PDF）。
+
 ## 测试
 
 ```bash
