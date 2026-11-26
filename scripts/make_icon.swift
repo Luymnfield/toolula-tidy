@@ -61,7 +61,7 @@ func text(_ c: CGContext, _ s: String, size: CGFloat, centerX: CGFloat, baseline
     c.saveGState()
     c.translateBy(x: centerX - b.width / 2 - b.minX, y: baseline); c.scaleBy(x: 1, y: -1)
     c.textPosition = .zero; c.setTextDrawingMode(.clip); CTLineDraw(line, c)
-    c.drawLinearGradient(CGGradient(colorsSpace: cs, colors: colors as CFArray, locations: nil)!, start: CGPoint(x: 0, y: font.capHeight), end: CGPoint(x: 0, y: font.descender), options: [])
+    c.drawLinearGradient(CGGradient(colorsSpace: cs, colors: colors as CFArray, locations: nil)!, start: CGPoint(x: 0, y: font.ascender), end: CGPoint(x: 0, y: font.descender), options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
     c.restoreGState()
 }
 func box(_ c: CGContext, _ center: CGPoint, _ s: CGFloat, _ angle: CGFloat, _ col: CGColor, stroke: Bool = false) {
