@@ -48,7 +48,7 @@ swift scripts/e2e.swift     # end-to-end test that opens the real app and clicks
 
 ## Translations
 
-UI text is written in the code as `L("中文原文")` (the Simplified Chinese source text is the key); translations live in `Localization/translations.json`.
+UI text is written in the code as `L("<source text>")`. The source text (Simplified Chinese) is used as the key, and translations into the other languages live in `Localization/translations.json`.
 `Localization/extract.py --check` reports missing translations, and the build warns about them automatically.
 
 ## Icon
