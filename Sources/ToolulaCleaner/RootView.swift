@@ -53,7 +53,6 @@ struct RootView: View {
         }
         .sheet(isPresented: $store.showFailures) { FailureSheet() }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) { SettingsMenu() }
         }
         .navigationTitle("Toolula Tidy")
         .navigationSubtitle(subtitle)
@@ -134,14 +133,16 @@ struct RootView: View {
             Spacer(minLength: 6)
             switch bottom {
             case .full:
-                MachineBadge(compact: true).frame(width: 70).padding(.bottom, 10)
+                MachineBadge(compact: true).frame(width: 70).padding(.bottom, 4)
             case .medium:
-                DiskRing(showChip: true).padding(.bottom, 10)
+                DiskRing(showChip: true).padding(.bottom, 4)
             case .mini:
-                DiskRing().padding(.bottom, 10)
+                DiskRing().padding(.bottom, 4)
             case .none:
                 EmptyView()
             }
+            // 和 Windows 版一样: 设置在左下角
+            SettingsMenu().padding(.bottom, compact ? 6 : 10)
         }
     }
 }
@@ -256,12 +257,36 @@ struct SettingsMenu: View {
                 Label(languageTitle, systemImage: "globe")
             }
             Divider()
-            Button(L("打开「完全磁盘访问权限」设置…")) { store.openFullDiskAccessSettings() }
+            // 常用的 macOS 系统设置: 不用自己在系统设置里找
+            Menu {
+                Button(L("完全磁盘访问权限…")) { store.openFullDiskAccessSettings() }
+                Button(L("登录项…")) { openSystem("x-apple.systempreferences:com.apple.LoginItems-Settings.extension") }
+                Button(L("储存空间…")) { openSystem("x-apple.systempreferences:com.apple.settings.Storage") }
+                Divider()
+                Button(L("活动监视器")) {
+                    NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Utilities/Activity Monitor.app"))
+                }
+            } label: {
+                Label(L("系统设置"), systemImage: "switch.2")
+            }
         } label: {
-            Label(L("设置"), systemImage: "gearshape")
+            Image(systemName: "gearshape")
+                .font(.system(size: 17))
+                .foregroundStyle(.secondary)
+                .frame(width: 44, height: 30)
+                .contentShape(Rectangle())
         }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
         .focusEffectDisabled()   // 启动时不要显示蓝色的焦点框
         .help(L("设置"))
+        .accessibilityLabel(L("设置"))
+        .accessibilityIdentifier("rail-settings")
+    }
+
+    func openSystem(_ url: String) {
+        if let u = URL(string: url) { NSWorkspace.shared.open(u) }
     }
 }
 

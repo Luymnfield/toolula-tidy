@@ -835,6 +835,17 @@
   "pt": "Elevada",
   "ru": "Повышенная"
  },
+ "储存空间…": {
+  "en": "Storage…",
+  "zh-Hant": "儲存空間…",
+  "ja": "ストレージ…",
+  "ko": "저장 공간…",
+  "de": "Speicher …",
+  "fr": "Stockage…",
+  "es": "Almacenamiento…",
+  "pt": "Armazenamento…",
+  "ru": "Хранилище…"
+ },
  "先扫描给你看，确认了才清理，默认移到废纸篓": {
   "en": "Scans first and shows you everything. Nothing is cleaned until you confirm, and items go to the Trash by default.",
   "zh-Hant": "先掃描給你看，確認後才清理，預設會移到垃圾桶",
@@ -1538,6 +1549,17 @@
   "es": "Sin usar en absoluto",
   "pt": "Totalmente sem uso",
   "ru": "Совсем не используется"
+ },
+ "完全磁盘访问权限…": {
+  "en": "Full Disk Access…",
+  "zh-Hant": "完整磁碟取用權限…",
+  "ja": "フルディスクアクセス…",
+  "ko": "전체 디스크 접근 권한…",
+  "de": "Festplattenvollzugriff …",
+  "fr": "Accès complet au disque…",
+  "es": "Acceso total al disco…",
+  "pt": "Acesso Total ao Disco…",
+  "ru": "Доступ ко всему диску…"
  },
  "已使用": {
   "en": "Used",
@@ -2760,6 +2782,17 @@
   "pt": "Não foi possível alterar “%@”",
   "ru": "Не удалось изменить «%@»"
  },
+ "活动监视器": {
+  "en": "Activity Monitor",
+  "zh-Hant": "活動監視器",
+  "ja": "アクティビティモニタ",
+  "ko": "활성 상태 보기",
+  "de": "Aktivitätsanzeige",
+  "fr": "Moniteur d’activité",
+  "es": "Monitor de Actividad",
+  "pt": "Monitor de Atividade",
+  "ru": "Мониторинг системы"
+ },
  "浏览器": {
   "en": "Browsers",
   "zh-Hant": "瀏覽器",
@@ -2946,6 +2979,17 @@
   "es": "Se abre al iniciar tu sesión. Si lo desactivas, ya no se abrirá automáticamente; puedes volver a activarlo cuando quieras.",
   "pt": "Abre quando você faz login. Desativado, não abre mais automaticamente; você pode reativá-lo a qualquer momento.",
   "ru": "Запускается при вашем входе. После отключения перестанет запускаться автоматически; включить снова можно в любой момент."
+ },
+ "登录项…": {
+  "en": "Login Items…",
+  "zh-Hant": "登入項目…",
+  "ja": "ログイン項目…",
+  "ko": "로그인 항목…",
+  "de": "Anmeldeobjekte …",
+  "fr": "Ouverture…",
+  "es": "Ítems de inicio…",
+  "pt": "Itens de Início…",
+  "ru": "Объекты входа…"
  },
  "白天模式": {
   "en": "Light",
@@ -3166,6 +3210,17 @@
   "es": "El sistema está comprimiendo mucha memoria y puede ir algo lento a ratos. Cierra las apps de abajo que no estés usando o algunas pestañas del navegador.",
   "pt": "O sistema está comprimindo muita memória e pode travar de vez em quando. Encerre os apps abaixo que não está usando ou feche algumas abas do navegador.",
   "ru": "Система активно сжимает память, возможны небольшие задержки. Завершите неиспользуемые программы ниже или закройте часть вкладок браузера."
+ },
+ "系统设置": {
+  "en": "System Settings",
+  "zh-Hant": "系統設定",
+  "ja": "システム設定",
+  "ko": "시스템 설정",
+  "de": "Systemeinstellungen",
+  "fr": "Réglages Système",
+  "es": "Ajustes del Sistema",
+  "pt": "Ajustes do Sistema",
+  "ru": "Системные настройки"
  },
  "紧张": {
   "en": "Critical",
