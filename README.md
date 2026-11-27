@@ -74,3 +74,7 @@ swift scripts/make_icon.swift Resources/icon_source.png Resources   # writes Res
 ```
 
 Then resize it with `sips` and package it with `iconutil -c icns` into `Resources/AppIcon.icns`.
+
+## License
+
+Toolula Tidy is licensed under the [Apache License 2.0](LICENSE). The Toolula name, logos and app icons are not covered by the license; see [NOTICE](NOTICE).

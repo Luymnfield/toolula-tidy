@@ -1,0 +1,18 @@
+Toolula Tidy
+Copyright 2026 Luymnfield
+
+This product is licensed under the Apache License, Version 2.0
+(see the LICENSE file).
+
+Trademarks
+----------
+The name "Toolula", the Toolula Tidy name, and the Toolula logos and app
+icons are not licensed under the Apache License. As section 6 of the
+License says, it grants no permission to use them, except as needed to
+describe where the work comes from. If you distribute a modified version,
+please give it a different name and icon.
+
+Third-party software
+--------------------
+Toolula Tidy contains no third-party code. It uses only the system
+frameworks that ship with macOS.
