@@ -79,6 +79,15 @@ final class MemoryMonitor: ObservableObject {
 
     func start() {
         guard timer == nil else { return }
+        if Demo.on {
+            // 产品截图: 曲线先填满 3 分钟的数据
+            let now = Date().timeIntervalSince1970
+            history = (0..<90).map { i in
+                let t = now - Double(90 - i) * 2
+                let s = Demo.memorySnapshot(at: t)
+                return Double(s.used) / Double(s.total)
+            }
+        }
         refresh()
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
             MainActor.assumeIsolated {
@@ -98,7 +107,7 @@ final class MemoryMonitor: ObservableObject {
 
     func refreshProcesses() {
         Task.detached(priority: .utility) {
-            let g = Self.topGroups()
+            let g = Demo.on ? Demo.memoryGroups() : Self.topGroups()
             await MainActor.run { self.groups = g }
         }
     }
@@ -106,6 +115,7 @@ final class MemoryMonitor: ObservableObject {
     // MARK: 读取系统数据 (和活动监视器同样的算法)
 
     nonisolated static func read() -> MemorySnapshot {
+        if Demo.on { return Demo.memorySnapshot() }
         var s = MemorySnapshot()
         var stats = vm_statistics64()
         var count = mach_msg_type_number_t(MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)

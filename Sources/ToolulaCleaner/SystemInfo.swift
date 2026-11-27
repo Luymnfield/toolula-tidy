@@ -86,6 +86,16 @@ final class SystemInfo: ObservableObject {
 
     /// 读取硬件信息 (切换语言后再调用一次, 让「14 核 CPU」这类文字跟着变)
     func loadHardware() {
+        if Demo.on {
+            machine = L("%@ %@ 英寸", "MacBook Pro", "16")
+            modelId = "Mac16,5"
+            chip = "Apple M4 Max"
+            memory = "128 GB"
+            totalGB = 128
+            cores = L("%@ 核 CPU", "16") + L("（%@ 性能 + %@ 能效）", "12", "4")
+            gpuCores = L("%@ 核 GPU", "40")
+            return
+        }
         Task.detached {
             let (code, out) = SystemInfo.shell("/usr/sbin/system_profiler", ["SPHardwareDataType", "SPDisplaysDataType", "-json"])
             guard code == 0, let obj = try? JSONSerialization.jsonObject(with: Data(out.utf8)) as? [String: Any] else { return }
@@ -150,6 +160,7 @@ final class SystemInfo: ObservableObject {
             $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { host_statistics64(mach_host_self(), HOST_VM_INFO64, $0, &count) }
         }
         guard r == KERN_SUCCESS else { return }
+        if Demo.on { usedGB = Double(Demo.memorySnapshot().used) / 1_073_741_824; return }
         let page = Double(vm_kernel_page_size)
         // 和活动监视器一样: 应用内存 + 系统固定 + 已压缩
         let used = (Double(stats.internal_page_count) - Double(stats.purgeable_count) + Double(stats.wire_count) + Double(stats.compressor_page_count)) * page
@@ -157,6 +168,10 @@ final class SystemInfo: ObservableObject {
     }
 
     func updateDisks() {
+        if Demo.on {
+            disks = [DiskInfo(id: "/", name: "Macintosh HD", total: Demo.diskTotal, free: Demo.diskFree, isSystem: true, isInternal: true)]
+            return
+        }
         let keys: [URLResourceKey] = [.volumeNameKey, .volumeTotalCapacityKey, .volumeAvailableCapacityForImportantUsageKey,
                                       .volumeAvailableCapacityKey, .volumeIsInternalKey, .volumeIsRootFileSystemKey, .volumeIsBrowsableKey]
         let urls = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: keys, options: [.skipHiddenVolumes]) ?? []

@@ -319,7 +319,8 @@ final class UninstallStore: ObservableObject {
     func load() {
         loading = true
         Task.detached(priority: .userInitiated) {
-            let list = Uninstaller.listApps()
+            // 产品截图: 只列英文名字的应用
+            let list = Uninstaller.listApps().filter { !Demo.on || $0.name.allSatisfy(\.isASCII) }
             await MainActor.run {
                 self.apps = list
                 self.loading = false

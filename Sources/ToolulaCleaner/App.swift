@@ -108,6 +108,11 @@ struct ToolulaCleanerApp: App {
                         else if arg == "diskMap" { store.section = .diskMap }
                         else if let k = CategoryKind(rawValue: arg) { store.section = .category(k) }
                     }
+                    // 产品截图: 所有类别都扫描一遍, 重复文件也先找好
+                    if Demo.on {
+                        store.scan(CategoryKind.allCases)
+                        if store.section == .duplicates { duplicates.scan() }
+                    }
                 }
         }
         .onChange(of: language) {

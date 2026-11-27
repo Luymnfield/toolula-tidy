@@ -3,6 +3,16 @@
 A safe, fast cleaner for macOS (native SwiftUI app, macOS 14+).
 It scans first and shows you everything; nothing is removed until you confirm. Items go to the Trash by default and every clean-up can be undone.
 
+![Toolula Tidy overview](docs/screenshots/home.png)
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Dev project junk](docs/screenshots/clean.png) **Clean** — every category with sizes; tick what to remove | ![Uninstall](docs/screenshots/uninstall.png) **Uninstall** — the app plus its settings, caches and data |
+| ![Space map](docs/screenshots/spacemap.png) **Space map** — see what fills your disk, click into folders | ![Duplicates](docs/screenshots/duplicates.png) **Duplicates** — identical files, one copy always kept |
+| ![Startup items](docs/screenshots/startup.png) **Startup** — turn background apps on or off | ![Memory](docs/screenshots/memory.png) **Memory** — pressure, breakdown and the apps using the most |
+
 ## Features
 
 - **Clean**: app caches, logs and crash reports, developer junk (Xcode / Homebrew / npm / pip, etc.), browser caches, old files in Downloads, Trash, large files
@@ -38,6 +48,10 @@ Download the DMG from [Releases](../../releases), open it and drag Toolula Tidy 
 The app is not yet signed with an Apple Developer ID, so macOS blocks the first launch: go to System Settings › Privacy & Security and click "Open Anyway".
 
 Installation guide: [docs/Toolula-Tidy-Install-Guide.pdf](docs/Toolula-Tidy-Install-Guide.pdf) (source: `docs/guide/install-guide.html`, printed to PDF with Chrome).
+
+## Screenshots for the README
+
+`ToolulaCleaner --demo` shows example machine info (MacBook Pro 16-inch, M4 Max, 128 GB memory, 2 TB disk) and example apps on the Memory page, so screenshots don't reveal the real machine. Combine it with `--fake-home <temp folder>` and `--section <page>`.
 
 ## Tests
 
